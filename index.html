@@ -8,7 +8,7 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;family=Space+Grotesk:wght@500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,6 +44,14 @@
                 }
             }
         }
+
+        // ========== LAUNCH CONFIG ==========
+        const SPEAKFOLIO_CONFIG = {
+            launched: false,  // Set to true when App Store approves
+            appStoreUrl: '#', // Replace with App Store link
+            waitlistEndpoint: '', // Supabase or Formspree endpoint
+            waitlistCount: 47, // Update manually or via API
+        };
     </script>
 
     <style>
@@ -126,6 +134,16 @@
         .border-theme { @apply border-[#1A1A1A] dark:border-[#333333]; }
         .grid-border > * { @apply border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333]; }
         .grid-border { @apply border-t-2 border-l-2 border-[#1A1A1A] dark:border-[#333333]; }
+
+        /* Mobile menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .mobile-menu.open {
+            max-height: 400px;
+        }
     </style>
 
     <script>
@@ -207,14 +225,24 @@
                 </div>
 
                 <!-- CTA -->
-                <a href="#" class="hidden md:flex cursor-hover items-center gap-2 bg-brand-yellow text-black border-2 border-black px-4 py-2 font-heading font-semibold text-sm uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+                <a href="#waitlist" class="hidden md:flex cursor-hover items-center gap-2 bg-brand-yellow text-black border-2 border-black px-4 py-2 font-heading font-semibold text-sm uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
                     Start Free <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
                 </a>
                 
                 <!-- Mobile Menu Icon -->
-                <button class="md:hidden cursor-hover text-[#1A1A1A] dark:text-white">
+                <button onclick="toggleMobileMenu()" class="md:hidden cursor-hover text-[#1A1A1A] dark:text-white">
                     <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                 </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+            <div class="flex flex-col p-6 space-y-4">
+                <a href="#how-it-works" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">How It Works</a>
+                <a href="#features" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Features</a>
+                <a href="#pricing" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Pricing</a>
+                <a href="#waitlist" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Join Waitlist</a>
             </div>
         </div>
     </nav>
@@ -260,14 +288,36 @@
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 items-start">
-                        <a href="#" class="cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform w-full sm:w-auto">
-                            Start Free for 30 Days <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
-                        </a>
+                        <!-- Hero CTA - Waitlist Form or App Store Button -->
+                        <div id="hero-cta" class="w-full sm:w-auto">
+                            <!-- Waitlist form (shown when not launched) -->
+                            <form id="hero-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'hero')" class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                                <input type="email" required placeholder="your@email.com" class="px-4 py-4 border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-sm focus:outline-none focus:border-brand-yellow w-full sm:w-64">
+                                <button type="submit" class="cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform whitespace-nowrap">
+                                    Join Waitlist <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                                </button>
+                            </form>
+                            <!-- Success message -->
+                            <div id="hero-waitlist-success" class="hidden bg-brand-mint border-2 border-black px-6 py-4 font-heading font-semibold text-black uppercase">
+                                ✓ You're on the list!
+                            </div>
+                            <!-- App Store button (shown when launched) -->
+                            <a id="hero-app-store" href="#" class="hidden cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform">
+                                Download on App Store <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                            </a>
+                        </div>
+                        
                         <a href="#how-it-works" class="cursor-hover inline-flex items-center justify-center bg-transparent border-2 border-[#1A1A1A] dark:border-white text-[#1A1A1A] dark:text-white px-8 py-4 font-heading font-semibold uppercase tracking-tight hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors w-full sm:w-auto">
                             See How It Works
                         </a>
                     </div>
                     <p class="font-mono text-[10px] text-gray-500 mt-3 uppercase tracking-wide">No credit card required</p>
+                    
+                    <!-- Coming Soon Badge -->
+                    <div id="app-store-badge" class="mt-6 inline-flex items-center gap-2 bg-[#1A1A1A] dark:bg-white text-white dark:text-black px-4 py-2 border-2 border-[#1A1A1A] dark:border-white font-mono text-xs uppercase tracking-wider">
+                        <iconify-icon icon="solar:star-linear" width="16"></iconify-icon>
+                        Coming Soon on the App Store
+                    </div>
                 </div>
             </div>
         </header>
@@ -284,7 +334,7 @@
         <!-- Intro / Value Prop (Accent: Yellow) -->
         <section class="grid grid-cols-1 lg:grid-cols-12 border-b-2 border-[#1A1A1A] dark:border-[#333333]">
             <div class="lg:col-span-7 border-b-2 lg:border-b-0 lg:border-r-2 border-[#1A1A1A] dark:border-[#333333] relative group overflow-hidden h-[500px] lg:h-auto">
-                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" alt="Professional at work">
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" alt="Professional at work">
                 <div class="absolute inset-0 bg-brand-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
             <div class="lg:col-span-5 p-10 lg:p-16 flex flex-col justify-center bg-white dark:bg-[#0A0A0A]">
@@ -314,7 +364,7 @@
                 <!-- Card 1 -->
                 <div class="min-w-[320px] md:min-w-[400px] snap-center bg-white dark:bg-[#1A1A1A] border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg cursor-hover group hover:border-brand-coral transition-colors">
                     <div class="h-48 mb-6 overflow-hidden border-2 border-[#1A1A1A] dark:border-[#333333] rounded">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Stress">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Stress">
                     </div>
                     <span class="inline-block bg-brand-coral text-white font-mono text-[10px] px-2 py-1 rounded mb-4">PROBLEM</span>
                     <h3 class="font-heading text-2xl uppercase mb-3">The Blank Page Panic</h3>
@@ -326,7 +376,7 @@
                 <!-- Card 2 -->
                 <div class="min-w-[320px] md:min-w-[400px] snap-center bg-white dark:bg-[#1A1A1A] border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg cursor-hover group hover:border-brand-coral transition-colors">
                     <div class="h-48 mb-6 overflow-hidden border-2 border-[#1A1A1A] dark:border-[#333333] rounded">
-                        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&amp;w=2068&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Empty Desk">
+                        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=2068&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Empty Desk">
                     </div>
                     <span class="inline-block bg-brand-coral text-white font-mono text-[10px] px-2 py-1 rounded mb-4">PROBLEM</span>
                     <h3 class="font-heading text-2xl uppercase mb-3">The Brag Doc Graveyard</h3>
@@ -338,7 +388,7 @@
                 <!-- Card 3 -->
                 <div class="min-w-[320px] md:min-w-[400px] snap-center bg-white dark:bg-[#1A1A1A] border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg cursor-hover group hover:border-brand-coral transition-colors">
                     <div class="h-48 mb-6 overflow-hidden border-2 border-[#1A1A1A] dark:border-[#333333] rounded">
-                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&amp;w=2074&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Meeting">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Meeting">
                     </div>
                     <span class="inline-block bg-brand-coral text-white font-mono text-[10px] px-2 py-1 rounded mb-4">RESULT</span>
                     <h3 class="font-heading text-2xl uppercase mb-3">The Promotion That Wasn't</h3>
@@ -354,7 +404,7 @@
                     <p class="font-mono text-sm text-black mb-8 max-w-xs">
                         143 documented wins. All real. All with dates and details and impact.
                     </p>
-                    <a href="#" class="border-2 border-black bg-black text-brand-yellow px-6 py-3 font-heading uppercase text-sm hover:bg-transparent hover:text-black transition-colors">
+                    <a href="#waitlist" class="border-2 border-black bg-black text-brand-yellow px-6 py-3 font-heading uppercase text-sm hover:bg-transparent hover:text-black transition-colors">
                         Start Capturing
                     </a>
                 </div>
@@ -456,7 +506,7 @@
                         <p class="font-sans text-gray-600 dark:text-gray-400 mb-8 max-w-sm">
                             No typing. No templates. No context-switching required. Just 30 seconds when the win is fresh.
                         </p>
-                        <a href="#" class="cursor-hover px-8 py-4 border-2 border-brand-sky text-[#1A1A1A] dark:text-white font-heading font-semibold uppercase hover:bg-brand-sky hover:text-white transition-colors inline-flex items-center gap-3">
+                        <a href="#waitlist" class="cursor-hover px-8 py-4 border-2 border-brand-sky text-[#1A1A1A] dark:text-white font-heading font-semibold uppercase hover:bg-brand-sky hover:text-white transition-colors inline-flex items-center gap-3">
                             Start Free Trial
                         </a>
                     </div>
@@ -518,9 +568,26 @@
             <p class="font-sans max-w-2xl mx-auto mb-10 text-lg">
                 The raise you didn't negotiate for because you couldn't prove you deserved it. Every win you don't capture today is ammunition you won't have tomorrow.
             </p>
-            <a href="#" class="cursor-hover inline-block bg-[#1A1A1A] text-brand-yellow px-10 py-5 font-heading text-xl uppercase tracking-tight hover:bg-white hover:text-black transition-colors rounded-md">
-                Start Free for 30 Days
-            </a>
+            
+            <!-- Mid-page CTA - Waitlist Form or App Store Button -->
+            <div id="midpage-cta" class="max-w-xl mx-auto">
+                <!-- Waitlist form (shown when not launched) -->
+                <form id="midpage-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'midpage')" class="flex flex-col sm:flex-row gap-2 justify-center">
+                    <input type="email" required placeholder="your@email.com" class="px-6 py-5 border-2 border-[#1A1A1A] bg-white text-black font-mono text-lg focus:outline-none focus:border-black w-full sm:w-auto sm:flex-1">
+                    <button type="submit" class="cursor-hover inline-block bg-[#1A1A1A] text-brand-yellow px-10 py-5 font-heading text-xl uppercase tracking-tight hover:bg-white hover:text-black transition-colors rounded-md whitespace-nowrap">
+                        Join Waitlist
+                    </button>
+                </form>
+                <!-- Success message -->
+                <div id="midpage-waitlist-success" class="hidden bg-black text-brand-yellow px-10 py-5 font-heading text-xl uppercase tracking-tight rounded-md">
+                    ✓ You're on the list!
+                </div>
+                <!-- App Store button (shown when launched) -->
+                <a id="midpage-app-store" href="#" class="hidden cursor-hover inline-block bg-[#1A1A1A] text-brand-yellow px-10 py-5 font-heading text-xl uppercase tracking-tight hover:bg-white hover:text-black transition-colors rounded-md">
+                    Download on App Store
+                </a>
+            </div>
+            
             <p class="font-mono text-xs mt-4 uppercase opacity-70">Career insurance. Less than your morning coffee.</p>
         </section>
 
@@ -581,7 +648,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <iconify-icon icon="solar:buildings-2-linear" class="text-brand-lavender"></iconify-icon>
-                        Trusted at Google, Meta, Stripe
+                        Used by professionals in tech, consulting, and finance
                     </div>
                 </div>
             </div>
@@ -605,7 +672,7 @@
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-linear" class="text-[#00D9A5]"></iconify-icon> 30-day history</li>
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-linear" class="text-[#00D9A5]"></iconify-icon> Export to text</li>
                         </ul>
-                        <a href="#" class="cursor-hover block text-center border-2 border-[#1A1A1A] dark:border-[#333333] py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">Start Free</a>
+                        <a href="#waitlist" class="cursor-hover block text-center border-2 border-[#1A1A1A] dark:border-[#333333] py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">Start Free</a>
                     </div>
                     <!-- Pro Monthly -->
                     <div class="border-2 border-[#FFE600] p-8 rounded-lg bg-white dark:bg-[#1A1A1A] relative">
@@ -621,7 +688,7 @@
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Project tagging and search</li>
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Review generation</li>
                         </ul>
-                        <a href="#" class="cursor-hover block text-center bg-[#FFE600] text-black border-2 border-black py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-black hover:text-[#FFE600] transition-colors">Start Free Trial</a>
+                        <a href="#waitlist" class="cursor-hover block text-center bg-[#FFE600] text-black border-2 border-black py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-black hover:text-[#FFE600] transition-colors">Start Free Trial</a>
                         <p class="text-center font-mono text-[10px] mt-3 opacity-60">30 days free. Cancel anytime.</p>
                     </div>
                     <!-- Pro Annual -->
@@ -630,7 +697,7 @@
                         <div class="mb-2 mt-4">
                             <span class="font-heading text-5xl font-bold">$79.99</span><span class="font-mono text-sm">/year</span>
                         </div>
-                        <p class="font-mono text-xs text-[#00D9A5] mb-8">$6.67/mo &mdash; save 33% vs monthly</p>
+                        <p class="font-mono text-xs text-[#00D9A5] mb-8">$6.67/mo - save 33% vs monthly</p>
                         <ul class="space-y-4 mb-8 font-inter text-sm">
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Everything in Pro, billed annually</li>
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Unlimited voice captures</li>
@@ -639,10 +706,47 @@
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Project tagging and search</li>
                             <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Review generation</li>
                         </ul>
-                        <a href="#" class="cursor-hover block text-center bg-[#00D9A5] text-black border-2 border-black py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-black hover:text-[#00D9A5] transition-colors">Get Annual Plan</a>
+                        <a href="#waitlist" class="cursor-hover block text-center bg-[#00D9A5] text-black border-2 border-black py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-black hover:text-[#00D9A5] transition-colors">Get Annual Plan</a>
                         <p class="text-center font-mono text-[10px] mt-3 opacity-60">Pay once. Save $39.89 per year.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- WAITLIST SECTION -->
+        <section id="waitlist" class="py-24 px-6 border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="font-heading text-4xl md:text-5xl font-semibold uppercase tracking-tight mb-4">Get Early Access</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-12 text-lg">
+                    Join <span id="waitlist-counter" class="font-heading font-bold text-brand-yellow">47</span> professionals on the waitlist. Be first when we launch.
+                </p>
+                
+                <!-- Waitlist Form -->
+                <form id="waitlist-main-form" onsubmit="handleWaitlistSubmit(event, 'waitlist')" class="max-w-xl mx-auto">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input 
+                            type="email" 
+                            required 
+                            placeholder="your@email.com" 
+                            class="flex-1 px-6 py-5 border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-lg focus:outline-none focus:border-brand-yellow transition-colors"
+                        >
+                        <button 
+                            type="submit" 
+                            class="cursor-hover bg-brand-yellow text-black border-2 border-black px-10 py-5 font-heading font-semibold text-lg uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all whitespace-nowrap"
+                        >
+                            Join Waitlist
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Success State -->
+                <div id="waitlist-main-success" class="hidden max-w-xl mx-auto mt-8 bg-brand-mint border-2 border-black px-10 py-8 text-center">
+                    <iconify-icon icon="solar:check-circle-bold" class="text-5xl text-black mb-4"></iconify-icon>
+                    <h3 class="font-heading text-2xl font-bold text-black uppercase mb-2">You're on the list!</h3>
+                    <p class="font-sans text-black">We'll notify you as soon as SpeakFolio launches.</p>
+                </div>
+                
+                <p class="font-mono text-xs text-gray-500 mt-6 uppercase tracking-wide">We respect your privacy. Unsubscribe anytime.</p>
             </div>
         </section>
 
@@ -718,10 +822,26 @@
                         </p>
                     </div>
                     <div class="flex flex-col justify-end items-start lg:items-end">
-                        <a href="#" class="cursor-hover group relative overflow-hidden bg-brand-yellow text-black px-12 py-6 font-heading text-xl uppercase tracking-wide font-bold rounded-sm">
-                            <span class="relative z-10 flex items-center gap-2">Start Capturing <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></span>
-                            <div class="absolute inset-0 bg-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
-                        </a>
+                        <!-- Footer CTA - Waitlist Form or App Store Button -->
+                        <div id="footer-cta" class="w-full lg:w-auto">
+                            <!-- Waitlist form (shown when not launched) -->
+                            <form id="footer-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'footer')" class="flex flex-col sm:flex-row gap-2 w-full">
+                                <input type="email" required placeholder="your@email.com" class="px-6 py-6 border-2 border-white bg-[#0A0A0A] text-white font-mono text-lg focus:outline-none focus:border-brand-yellow w-full sm:flex-1">
+                                <button type="submit" class="cursor-hover group relative overflow-hidden bg-brand-yellow text-black px-12 py-6 font-heading text-xl uppercase tracking-wide font-bold rounded-sm whitespace-nowrap">
+                                    <span class="relative z-10 flex items-center gap-2">Join Waitlist <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></span>
+                                    <div class="absolute inset-0 bg-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
+                                </button>
+                            </form>
+                            <!-- Success message -->
+                            <div id="footer-waitlist-success" class="hidden bg-brand-mint border-2 border-white px-8 py-6 font-heading font-semibold text-black uppercase text-center">
+                                ✓ You're on the list!
+                            </div>
+                            <!-- App Store button (shown when launched) -->
+                            <a id="footer-app-store" href="#" class="hidden cursor-hover group relative overflow-hidden bg-brand-yellow text-black px-12 py-6 font-heading text-xl uppercase tracking-wide font-bold rounded-sm">
+                                <span class="relative z-10 flex items-center gap-2">Download Now <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></span>
+                                <div class="absolute inset-0 bg-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
+                            </a>
+                        </div>
                         <p class="font-mono text-xs text-gray-500 mt-4 uppercase">No setup marathon. Just 30 seconds.</p>
                     </div>
                 </div>
@@ -730,28 +850,28 @@
                     <div>
                         <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Connect</h5>
                         <ul class="space-y-2 font-heading text-lg">
-                            <li><a href="#" class="hover:text-brand-yellow transition-colors cursor-hover">Twitter</a></li>
-                            <li><a href="#" class="hover:text-brand-yellow transition-colors cursor-hover">LinkedIn</a></li>
+                            <li><a href="https://twitter.com/SpeakFolioApp" class="hover:text-brand-yellow transition-colors cursor-hover">Twitter</a></li>
+                            <li><a href="https://linkedin.com/company/kentrologia" class="hover:text-brand-yellow transition-colors cursor-hover">LinkedIn</a></li>
                         </ul>
                     </div>
                     <div>
                         <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Product</h5>
                         <ul class="space-y-2 font-heading text-lg">
                             <li><a href="#pricing" class="hover:text-brand-yellow transition-colors cursor-hover">Pricing</a></li>
-                            <li><a href="#" class="hover:text-brand-yellow transition-colors cursor-hover">Enterprise</a></li>
+                            <li><a href="mailto:hello@kentrologia.com" class="hover:text-brand-yellow transition-colors cursor-hover">Enterprise</a></li>
                         </ul>
                     </div>
                      <div>
                         <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Legal</h5>
                         <ul class="space-y-2 font-heading text-lg">
-                            <li><a href="#" class="hover:text-brand-yellow transition-colors cursor-hover">Terms</a></li>
-                            <li><a href="/speakfolio-landing/privacy.html" class="hover:text-brand-yellow transition-colors cursor-hover">Privacy</a></li>
+                            <li><a href="terms.html" class="hover:text-brand-yellow transition-colors cursor-hover">Terms</a></li>
+                            <li><a href="privacy.html" class="hover:text-brand-yellow transition-colors cursor-hover">Privacy</a></li>
                         </ul>
                     </div>
                     <div>
                         <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Help</h5>
                         <ul class="space-y-2 font-heading text-lg">
-                            <li><a href="/speakfolio-landing/support.html" class="hover:text-brand-yellow transition-colors cursor-hover">Support</a></li>
+                            <li><a href="support.html" class="hover:text-brand-yellow transition-colors cursor-hover">Support</a></li>
                             <li><a href="mailto:support@speakfolio.app" class="hover:text-brand-yellow transition-colors cursor-hover">Contact</a></li>
                         </ul>
                     </div>
@@ -789,6 +909,7 @@
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('loaded');
                 initAnimations();
+                initLaunchState();
             }, 1000);
         });
 
@@ -803,6 +924,87 @@
             }, { threshold: 0.1 });
 
             document.querySelectorAll('.reveal-text').forEach(el => observer.observe(el));
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+
+        // Initialize Launch State
+        function initLaunchState() {
+            const launched = SPEAKFOLIO_CONFIG.launched;
+            const appStoreUrl = SPEAKFOLIO_CONFIG.appStoreUrl;
+            
+            // Update waitlist counter
+            document.getElementById('waitlist-counter').textContent = SPEAKFOLIO_CONFIG.waitlistCount;
+            
+            if (launched) {
+                // Hide all waitlist forms, show app store buttons
+                ['hero', 'midpage', 'footer'].forEach(location => {
+                    const form = document.getElementById(`${location}-waitlist-form`);
+                    const appStore = document.getElementById(`${location}-app-store`);
+                    if (form) form.classList.add('hidden');
+                    if (appStore) {
+                        appStore.classList.remove('hidden');
+                        appStore.href = appStoreUrl;
+                    }
+                });
+                // Hide "Coming Soon" badge
+                document.getElementById('app-store-badge').classList.add('hidden');
+            } else {
+                // Show waitlist forms (default state)
+                ['hero', 'midpage', 'footer'].forEach(location => {
+                    const form = document.getElementById(`${location}-waitlist-form`);
+                    const appStore = document.getElementById(`${location}-app-store`);
+                    if (form) form.classList.remove('hidden');
+                    if (appStore) appStore.classList.add('hidden');
+                });
+            }
+        }
+
+        // Waitlist Form Submission
+        async function handleWaitlistSubmit(event, source) {
+            event.preventDefault();
+            const form = event.target;
+            const email = form.querySelector('input[type="email"]').value;
+            
+            // Submit to endpoint
+            const result = await submitWaitlist(email, source);
+            
+            if (result.success) {
+                // Show success message
+                form.classList.add('hidden');
+                document.getElementById(`${source}-waitlist-success`).classList.remove('hidden');
+                
+                // Increment counter if on main waitlist form
+                if (source === 'waitlist') {
+                    SPEAKFOLIO_CONFIG.waitlistCount++;
+                    document.getElementById('waitlist-counter').textContent = SPEAKFOLIO_CONFIG.waitlistCount;
+                }
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
+        }
+
+        // Waitlist Submission Function
+        async function submitWaitlist(email, source) {
+            const endpoint = SPEAKFOLIO_CONFIG.waitlistEndpoint;
+            if (!endpoint) {
+                // Demo mode - just show success
+                return { success: true };
+            }
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, source, timestamp: new Date().toISOString() })
+                });
+                return { success: res.ok };
+            } catch (e) {
+                return { success: false, error: e.message };
+            }
         }
     </script>
 
