@@ -287,36 +287,32 @@
                         Your accomplishments disappear the moment they happen. SpeakFolio captures them automatically, so when review season hits, you're prepared with proof—not panic.
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 items-start">
-                        <!-- Hero CTA - Waitlist Form or App Store Button -->
-                        <div id="hero-cta" class="w-full sm:w-auto">
-                            <!-- Waitlist form (shown when not launched) -->
-                            <form id="hero-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'hero')" class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                                <input type="email" required placeholder="your@email.com" class="px-4 py-4 border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-sm focus:outline-none focus:border-brand-yellow w-full sm:w-64">
-                                <button type="submit" class="cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform whitespace-nowrap">
-                                    Join Waitlist <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
-                                </button>
-                            </form>
-                            <!-- Success message -->
-                            <div id="hero-waitlist-success" class="hidden bg-brand-mint border-2 border-black px-6 py-4 font-heading font-semibold text-black uppercase">
-                                ✓ You're on the list!
-                            </div>
-                            <!-- App Store button (shown when launched) -->
-                            <a id="hero-app-store" href="#" class="hidden cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform">
-                                Download on App Store <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
-                            </a>
+                    <!-- Hero CTA - Waitlist or App Store -->
+                    <div id="hero-cta">
+                        <!-- Waitlist form (shown when not launched) -->
+                        <form id="hero-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'hero')" class="flex flex-col sm:flex-row gap-3 mb-4">
+                            <input type="email" required placeholder="your@email.com" class="px-4 py-4 border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-sm focus:outline-none focus:border-brand-yellow w-full sm:w-64">
+                            <button type="submit" class="cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform whitespace-nowrap">
+                                Join Waitlist <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                            </button>
+                        </form>
+                        <!-- Success message -->
+                        <div id="hero-waitlist-success" class="hidden bg-brand-mint border-2 border-black px-6 py-4 mb-4 font-heading font-semibold text-black uppercase">
+                            You're on the list!
                         </div>
-                        
+                        <!-- App Store button (shown when launched) -->
+                        <a id="hero-app-store" href="#" class="hidden cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 mb-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform">
+                            Download on App Store <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                        </a>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 items-start">
                         <a href="#how-it-works" class="cursor-hover inline-flex items-center justify-center bg-transparent border-2 border-[#1A1A1A] dark:border-white text-[#1A1A1A] dark:text-white px-8 py-4 font-heading font-semibold uppercase tracking-tight hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors w-full sm:w-auto">
                             See How It Works
                         </a>
-                    </div>
-                    <p class="font-mono text-[10px] text-gray-500 mt-3 uppercase tracking-wide">No credit card required</p>
-                    
-                    <!-- Coming Soon Badge -->
-                    <div id="app-store-badge" class="mt-6 inline-flex items-center gap-2 bg-[#1A1A1A] dark:bg-white text-white dark:text-black px-4 py-2 border-2 border-[#1A1A1A] dark:border-white font-mono text-xs uppercase tracking-wider">
-                        <iconify-icon icon="solar:star-linear" width="16"></iconify-icon>
-                        Coming Soon on the App Store
+                        <span id="app-store-badge" class="inline-flex items-center gap-2 text-gray-500 font-mono text-[10px] uppercase tracking-wider py-4">
+                            <iconify-icon icon="solar:smartphone-linear" width="14"></iconify-icon>
+                            Coming Soon on the App Store
                     </div>
                 </div>
             </div>
