@@ -49,8 +49,9 @@
         const SPEAKFOLIO_CONFIG = {
             launched: false,  // Set to true when App Store approves
             appStoreUrl: '#', // Replace with App Store link
-            waitlistEndpoint: '', // Supabase or Formspree endpoint
-            waitlistCount: 47, // Update manually or via API
+            supabaseUrl: 'https://dbvskatzmqobmrbxhkjj.supabase.co',
+            supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRidnNrYXR6bXFvYm1yYnhoa2pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NTY4NTAsImV4cCI6MjA4MzQzMjg1MH0.cR1A8Cyrgv5qyiF53ImX_VxddhHX1PHyE33fVMW7LlY',
+            waitlistCount: 0, // Loaded dynamically from Supabase
         };
     </script>
 
@@ -289,30 +290,36 @@
                     
                     <!-- Hero CTA - Waitlist or App Store -->
                     <div id="hero-cta">
-                        <!-- Waitlist form (shown when not launched) -->
-                        <form id="hero-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'hero')" class="flex flex-col sm:flex-row gap-3 mb-4">
-                            <input type="email" required placeholder="your@email.com" class="px-4 py-4 border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-sm focus:outline-none focus:border-brand-yellow w-full sm:w-64">
-                            <button type="submit" class="cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform whitespace-nowrap">
-                                Join Waitlist <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
-                            </button>
-                        </form>
                         <!-- Success message -->
                         <div id="hero-waitlist-success" class="hidden bg-brand-mint border-2 border-black px-6 py-4 mb-4 font-heading font-semibold text-black uppercase">
                             You're on the list!
                         </div>
-                        <!-- App Store button (shown when launched) -->
-                        <a id="hero-app-store" href="#" class="hidden cursor-hover inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 mb-4 font-heading font-semibold text-black uppercase tracking-tight hover:translate-y-[-2px] transition-transform">
-                            Download on App Store <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
-                        </a>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row gap-4 items-start">
-                        <a href="#how-it-works" class="cursor-hover inline-flex items-center justify-center bg-transparent border-2 border-[#1A1A1A] dark:border-white text-[#1A1A1A] dark:text-white px-8 py-4 font-heading font-semibold uppercase tracking-tight hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors w-full sm:w-auto">
-                            See How It Works
-                        </a>
-                        <span id="app-store-badge" class="inline-flex items-center gap-2 text-gray-500 font-mono text-[10px] uppercase tracking-wider py-4">
-                            <iconify-icon icon="solar:smartphone-linear" width="14"></iconify-icon>
-                            Coming Soon on the App Store
+                        
+                        <!-- CTA Container: Primary + Secondary side-by-side -->
+                        <div class="flex flex-col md:flex-row gap-4 items-start mb-3">
+                            <!-- Primary CTA: Waitlist Form (waitlist mode) -->
+                            <form id="hero-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'hero')" class="flex flex-col sm:flex-row gap-3 flex-1">
+                                <input type="email" required placeholder="your@email.com" class="px-4 py-4 rounded-md border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-sm focus:outline-none focus:border-brand-yellow w-full sm:flex-1">
+                                <button type="submit" class="cursor-hover hover-lift inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight whitespace-nowrap">
+                                    Join Waitlist <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                                </button>
+                            </form>
+                            
+                            <!-- Primary CTA: App Store button (launched mode) -->
+                            <a id="hero-app-store" href="#" class="hidden cursor-hover hover-lift inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight whitespace-nowrap">
+                                Download on App Store <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                            </a>
+                            
+                            <!-- Secondary CTA: See How It Works -->
+                            <a href="#how-it-works" class="cursor-hover hover-lift inline-flex items-center justify-center bg-transparent border-2 border-[#1A1A1A] dark:border-white text-[#1A1A1A] dark:text-white px-8 py-4 font-heading font-semibold uppercase tracking-tight hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors w-full md:w-auto whitespace-nowrap">
+                                See How It Works
+                            </a>
+                        </div>
+                        
+                        <!-- Subtle trust text -->
+                        <p class="text-gray-500 dark:text-gray-600 font-mono text-xs">
+                            No credit card required. Free plan available.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -984,24 +991,57 @@
             }
         }
 
-        // Waitlist Submission Function
+        // Waitlist Submission Function (Supabase REST API)
         async function submitWaitlist(email, source) {
-            const endpoint = SPEAKFOLIO_CONFIG.waitlistEndpoint;
-            if (!endpoint) {
-                // Demo mode - just show success
-                return { success: true };
+            const { supabaseUrl, supabaseKey } = SPEAKFOLIO_CONFIG;
+            if (!supabaseUrl || !supabaseKey) {
+                return { success: true }; // Demo mode
             }
             try {
-                const res = await fetch(endpoint, {
+                const res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, source, timestamp: new Date().toISOString() })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': supabaseKey,
+                        'Authorization': `Bearer ${supabaseKey}`,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ email, source })
                 });
+                if (res.status === 409 || res.status === 409) {
+                    // Duplicate email, treat as success
+                    return { success: true, duplicate: true };
+                }
                 return { success: res.ok };
             } catch (e) {
                 return { success: false, error: e.message };
             }
         }
+
+        // Load live waitlist count from Supabase
+        async function loadWaitlistCount() {
+            const { supabaseUrl, supabaseKey } = SPEAKFOLIO_CONFIG;
+            if (!supabaseUrl || !supabaseKey) return;
+            try {
+                const res = await fetch(`${supabaseUrl}/rest/v1/rpc/get_waitlist_count`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': supabaseKey,
+                        'Authorization': `Bearer ${supabaseKey}`
+                    }
+                });
+                if (res.ok) {
+                    const count = await res.json();
+                    SPEAKFOLIO_CONFIG.waitlistCount = count;
+                    const el = document.getElementById('waitlist-counter');
+                    if (el) el.textContent = count;
+                }
+            } catch (e) { /* silent fail */ }
+        }
+
+        // Load count on page load
+        document.addEventListener('DOMContentLoaded', loadWaitlistCount);
     </script>
 
 </body></html>
