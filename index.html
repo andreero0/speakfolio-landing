@@ -1006,19 +1006,8 @@
                     // Duplicate email, treat as success
                     return { success: true, duplicate: true };
                 }
-                if (res.ok) {
-                    // Trigger server-side notifications (welcome email + admin alert)
-                    // This calls a Supabase RPC that handles notifications via pg_net
-                    fetch(`${supabaseUrl}/rest/v1/rpc/notify_waitlist_signup`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'apikey': supabaseKey,
-                            'Authorization': `Bearer ${supabaseKey}`
-                        },
-                        body: JSON.stringify({ signup_email: email, signup_source: source })
-                    }).catch(() => {}); // Fire and forget; don't block UI
-                }
+                // Notifications (welcome email + Telegram alert) fire automatically
+                // via PostgreSQL trigger on insert. No client-side call needed.
                 return { success: res.ok };
             } catch (e) {
                 return { success: false, error: e.message };
