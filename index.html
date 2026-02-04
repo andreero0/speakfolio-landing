@@ -721,7 +721,7 @@
             <div class="max-w-3xl mx-auto text-center">
                 <h2 class="font-heading text-4xl md:text-5xl font-semibold uppercase tracking-tight mb-4">Get Early Access</h2>
                 <p class="text-gray-600 dark:text-gray-400 mb-12 text-lg">
-                    Join <span id="waitlist-counter" class="font-heading font-bold text-brand-yellow">47</span> professionals on the waitlist. Be first when we launch.
+                    <span id="waitlist-counter-wrapper">Join <span id="waitlist-counter" class="font-heading font-bold text-brand-yellow">0</span> professionals on the waitlist. </span>Be first when we launch.
                 </p>
                 
                 <!-- Waitlist Form -->
@@ -875,7 +875,7 @@
                         <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Help</h5>
                         <ul class="space-y-2 font-heading text-lg">
                             <li><a href="support.html" class="hover:text-brand-yellow transition-colors cursor-hover">Support</a></li>
-                            <li><a href="mailto:support@speakfolio.app" class="hover:text-brand-yellow transition-colors cursor-hover">Contact</a></li>
+                            <li><a href="mailto:hello@kentrologia.com" class="hover:text-brand-yellow transition-colors cursor-hover">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -1035,7 +1035,13 @@
                     const count = await res.json();
                     SPEAKFOLIO_CONFIG.waitlistCount = count;
                     const el = document.getElementById('waitlist-counter');
-                    if (el) el.textContent = count;
+                    const wrapper = document.getElementById('waitlist-counter-wrapper');
+                    if (count >= 10 && el) {
+                        el.textContent = count;
+                        if (wrapper) wrapper.style.display = '';
+                    } else if (wrapper) {
+                        wrapper.style.display = 'none';
+                    }
                 }
             } catch (e) { /* silent fail */ }
         }
