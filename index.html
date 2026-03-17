@@ -226,7 +226,7 @@
                 </div>
 
                 <!-- CTA -->
-                <a href="#waitlist" class="hidden md:flex cursor-hover items-center gap-2 bg-brand-yellow text-black border-2 border-black px-4 py-2 font-heading font-semibold text-sm uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+                <a href="#waitlist" class="hidden md:flex cursor-hover items-center gap-2 bg-brand-yellow text-black border-2 border-black px-4 py-2 font-heading font-semibold text-sm uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all launch-cta" data-launched="Download Free" data-waitlist="Start Free">
                     Start Free <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
                 </a>
                 
@@ -410,7 +410,7 @@
                     <p class="font-mono text-sm text-black mb-8 max-w-xs">
                         143 documented wins. All real. All with dates and details and impact.
                     </p>
-                    <a href="#waitlist" class="border-2 border-black bg-black text-brand-yellow px-6 py-3 font-heading uppercase text-sm hover:bg-transparent hover:text-black transition-colors">
+                    <a href="#waitlist" class="border-2 border-black bg-black text-brand-yellow px-6 py-3 font-heading uppercase text-sm hover:bg-transparent hover:text-black transition-colors launch-cta" data-launched="Download Free" data-waitlist="Start Capturing">
                         Start Capturing
                     </a>
                 </div>
@@ -486,7 +486,7 @@
                 </div>
 
                 <!-- Feature 6 (CTA) -->
-                <a href="#waitlist" class="group p-10 flex flex-col justify-center items-center bg-gray-50 dark:bg-[#111] hover:bg-brand-mint hover:text-black cursor-hover transition-colors duration-300">
+                <a href="#waitlist" class="group p-10 flex flex-col justify-center items-center bg-gray-50 dark:bg-[#111] hover:bg-brand-mint hover:text-black cursor-hover transition-colors duration-300 launch-cta" data-launched="https://apps.apple.com/app/speakfolio/id6757969505" data-waitlist="#waitlist">
                     <iconify-icon icon="solar:arrow-right-linear" class="text-4xl mb-4"></iconify-icon>
                     <h3 class="font-heading text-xl uppercase font-bold">Start Building Your Record</h3>
                 </a>
@@ -953,9 +953,29 @@
             // Update waitlist counter
             document.getElementById('waitlist-counter').textContent = SPEAKFOLIO_CONFIG.waitlistCount;
             
-            // Update all launch-aware CTA text
+            // Update all launch-aware CTA text and href
             document.querySelectorAll('.launch-cta').forEach(el => {
-                el.textContent = launched ? el.dataset.launched : el.dataset.waitlist;
+                if (launched) {
+                    const launchedVal = el.dataset.launched;
+                    // If data-launched is a URL, just update href; otherwise update text + href
+                    if (launchedVal && launchedVal.startsWith('http')) {
+                        el.href = launchedVal;
+                    } else {
+                        if (launchedVal) {
+                            const icon = el.querySelector('iconify-icon');
+                            el.textContent = launchedVal;
+                            if (icon) el.appendChild(icon);
+                        }
+                        el.href = appStoreUrl;
+                    }
+                } else {
+                    const waitlistVal = el.dataset.waitlist;
+                    if (waitlistVal && !waitlistVal.startsWith('#') && !waitlistVal.startsWith('http')) {
+                        const icon = el.querySelector('iconify-icon');
+                        el.textContent = waitlistVal;
+                        if (icon) el.appendChild(icon);
+                    }
+                }
             });
             
             if (launched) {
