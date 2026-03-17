@@ -306,8 +306,11 @@
                             </form>
                             
                             <!-- Primary CTA: App Store button (launched mode) -->
-                            <a id="hero-app-store" href="https://apps.apple.com/app/speakfolio/id6757969505" class="hidden cursor-hover hover-lift inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight whitespace-nowrap">
-                                Download on App Store <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                            <a id="hero-app-store" href="https://apps.apple.com/app/speakfolio/id6757969505" class="hidden cursor-hover hover-lift inline-flex items-center justify-center">
+                                <!-- Light mode badge -->
+                                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" class="h-14 dark:hidden" style="height:56px;">
+                                <!-- Dark mode badge -->
+                                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-us?size=250x83" alt="Download on the App Store" class="h-14 hidden dark:inline" style="height:56px;">
                             </a>
                             
                             <!-- Secondary CTA: See How It Works -->
