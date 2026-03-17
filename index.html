@@ -701,6 +701,23 @@
                         <p class="text-center font-mono text-[10px] mt-3 opacity-60">Pay once. Save $39.89 per year.</p>
                     </div>
                 </div>
+
+                <!-- Founding 100 Banner -->
+                <div class="mt-12 border-2 border-black dark:border-white bg-[#FFE600] p-8 rounded-lg text-black relative overflow-hidden">
+                    <span class="font-mono text-xs uppercase bg-black text-[#FFE600] px-2 py-1 rounded mb-4 inline-block">Limited Offer</span>
+                    <h3 class="font-heading text-3xl font-bold uppercase tracking-tight mb-2">Founding 100</h3>
+                    <div class="flex items-center justify-center gap-2 font-mono text-sm uppercase tracking-tight mb-4">
+                        <span style="display: inline-block; width: 8px; height: 8px; background: #1A1A1A; border-radius: 50%;"></span>
+                        <span><span id="founding-counter" class="font-bold">51</span> of 100 spots claimed</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="font-heading text-5xl font-bold">$49.99</span><span class="font-mono text-sm"> one-time</span>
+                    </div>
+                    <p class="font-sans text-sm mb-6 max-w-md mx-auto">Lifetime Pro access. No monthly fees, ever. All future features included. Available to the first 100 people who believed before the launch.</p>
+                    <a href="https://buy.stripe.com/9B6cN51Jhf3n7G1dmG4Ni01" class="cursor-hover inline-block bg-black text-[#FFE600] border-2 border-black px-8 py-3 font-heading uppercase font-semibold text-sm hover:bg-transparent hover:text-black transition-colors">Claim Your Spot</a>
+                    <p class="font-mono text-[10px] mt-3 opacity-70">This offer closes permanently when 100 spots are claimed.</p>
+                </div>
+
             </div>
         </section>
 
@@ -1042,8 +1059,29 @@
             } catch (e) { /* silent fail */ }
         }
 
+        async function loadFoundingCount() {
+            const { supabaseUrl, supabaseKey } = SPEAKFOLIO_CONFIG;
+            if (!supabaseUrl || !supabaseKey) return;
+            try {
+                const res = await fetch(`${supabaseUrl}/rest/v1/rpc/get_founding_count`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': supabaseKey,
+                        'Authorization': `Bearer ${supabaseKey}`
+                    },
+                    body: '{}'
+                });
+                if (res.ok) {
+                    const count = await res.json();
+                    const el = document.getElementById('founding-counter');
+                    if (el) el.textContent = count;
+                }
+            } catch (e) { /* silent fail */ }
+        }
+
         // Load count on page load
-        document.addEventListener('DOMContentLoaded', loadWaitlistCount);
+        document.addEventListener('DOMContentLoaded', () => { loadWaitlistCount(); loadFoundingCount(); });
     </script>
 
 </body></html>
