@@ -100,7 +100,7 @@
                 <h1 class="font-heading text-5xl md:text-7xl font-medium uppercase tracking-tight leading-[0.9] mb-6">Privacy<br>Policy</h1>
                 <div class="inline-flex items-center gap-2 border-2 border-[#1A1A1A] dark:border-[#333333] px-4 py-2 rounded-md">
                     <div class="w-2 h-2 rounded-full bg-brand-mint"></div>
-                    <span class="font-mono text-[10px] uppercase">Last Updated: January 18, 2026</span>
+                    <span class="font-mono text-[10px] uppercase">Last Updated: October 28, 2026</span>
                 </div>
             </div>
         </section>
@@ -137,18 +137,18 @@
                             <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Voice Recordings</h3>
                             <ul class="list-disc ml-6 space-y-1">
                                 <li>Audio files are encrypted and stored securely on cloud storage services</li>
-                                <li>Transcriptions are processed using AI transcription services</li>
-                                <li>You can delete recordings at any time from within the app</li>
-                                <li>Deleted recordings are permanently removed from our servers</li>
+                                <li>Recordings are processed by us and our service providers, including third-party AI services, to provide Speakfolio</li>
+                                <li>You can choose an audio retention policy in Privacy &amp; Data settings, permanently delete an entry from Recently Deleted, or request account deletion</li>
+                                <li>Audio removal runs in the background through our file-deletion service; failed deletions are retained and retried</li>
                             </ul>
                         </div>
                         <div>
                             <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Usage Data</h3>
                             <ul class="list-disc ml-6 space-y-1">
                                 <li>Device information (type, operating system version)</li>
-                                <li>App usage analytics (optional and anonymized)</li>
+                                <li>App usage analytics, which may be associated with your account identifier</li>
                                 <li>Error logs (for debugging purposes only)</li>
-                                <li>Feature usage patterns (to improve the app experience)</li>
+                                <li>Feature usage patterns, to improve the app experience</li>
                             </ul>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                             <li>Process your voice recordings and generate AI-powered outputs</li>
                             <li>Send you notifications (with your explicit permission)</li>
                             <li>Improve app performance and fix technical issues</li>
-                            <li>Process subscription payments (via Apple App Store or Google Play Store)</li>
+                            <li>Process payments through the Apple App Store, Google Play Store, or Stripe, depending on how you purchased</li>
                             <li>Analyze app usage to enhance features and user experience</li>
                             <li>Comply with legal obligations</li>
                         </ul>
@@ -179,10 +179,10 @@
                     </summary>
                     <div class="p-6 pt-0 text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-brand-sky/10">
                         <ul class="list-disc ml-6 space-y-2">
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Authentication:</strong> Managed by SOC 2 Type II certified providers</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Authentication:</strong> Managed by our authentication provider</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Database:</strong> Secure cloud services with row-level security policies</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Storage:</strong> Encrypted cloud storage for audio files</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">AI Processing:</strong> Third-party AI services for transcription and generation</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">AI Processing:</strong> Third-party AI services, used to provide Speakfolio</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Transport:</strong> All data transmitted over HTTPS/TLS encryption</li>
                         </ul>
                     </div>
@@ -198,12 +198,65 @@
                         <ul class="list-disc ml-6 space-y-2">
                             <li><strong class="text-[#1A1A1A] dark:text-white">Authentication services:</strong> Account management and security</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Cloud database providers:</strong> Data storage and hosting</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">AI transcription services:</strong> Voice-to-text conversion</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">AI generation services:</strong> Content creation and processing</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Data processing services, including third-party AI services:</strong> Processing your audio recordings, transcripts and entry text to provide Speakfolio</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Payment processors:</strong> Subscription management</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Analytics (optional):</strong> Anonymous usage analytics</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Analytics providers:</strong> App usage analytics, which may include your account identifier</li>
                         </ul>
                         <p class="mt-4">These services are bound by their own privacy policies and data processing agreements.</p>
+                        <p class="mt-4">What third-party AI services receive, and your choice about it, is in the <a href="#ai-processing" class="text-brand-yellow hover:underline cursor-hover">AI Processing</a> section below. You can request the current list of these service providers at <a href="mailto:privacy@speakfolio.app" class="text-brand-yellow hover:underline cursor-hover">privacy@speakfolio.app</a>.</p>
+                    </div>
+                </details>
+
+                <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover" id="ai-processing">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-heading font-semibold uppercase group-open:bg-brand-coral/10 transition-colors">
+                        AI Processing
+                        <iconify-icon icon="solar:add-circle-linear" class="text-brand-yellow group-open:rotate-45 transition-transform" width="24"></iconify-icon>
+                    </summary>
+                    <div class="p-6 pt-0 text-[#666666] dark:text-[#AAAAAA] leading-relaxed space-y-6 group-open:bg-brand-coral/10">
+                        <p>Speakfolio shares some of your content with third-party AI services to provide the app. You can allow or withdraw this in the app. Permission below explains how it works, including what happens for accounts that have not made a choice yet.</p>
+                        <div>
+                            <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">What is sent</h3>
+                            <ul class="list-disc ml-6 space-y-1">
+                                <li>Audio recordings</li>
+                                <li>Transcripts</li>
+                                <li>Entry text, such as titles, summaries, context, actions, results, impact and skills</li>
+                                <li>Project names, success criteria and outcomes</li>
+                                <li>Your career goal and target date</li>
+                                <li>Document inputs, such as the target role, seniority and salary figures you enter</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Why</h3>
+                            <ul class="list-disc ml-6 space-y-1">
+                                <li>To provide SpeakFolio features, such as your entries, documents and suggestions</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Who receives it</h3>
+                            <p class="mb-2">To provide SpeakFolio, your recordings and text are processed by us and by trusted service providers acting on our behalf, including third-party AI services.</p>
+                            <p class="mb-2">They may only use your content to provide the service. Their business terms, together with the settings we send with each request, do not allow your content to be used to train AI models.</p>
+                            <p class="mb-2">You can request the current list of these service providers at <a href="mailto:privacy@speakfolio.app" class="text-brand-yellow hover:underline cursor-hover">privacy@speakfolio.app</a>.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Where it is processed</h3>
+                            <p class="mb-2">Our service providers may process your content in the United States or other regions where they operate.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Training and retention</h3>
+                            <p class="mb-2">Your data is not used to train AI models.</p>
+                            <p class="mb-2">This is separate from retention. Service providers may keep request data for a limited time for abuse monitoring or operations, under their own terms. Speakfolio stores your content as described in Data Retention below.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Permission</h3>
+                            <ul class="list-disc ml-6 space-y-1">
+                                <li>You can choose Allow AI processing in the app, and withdraw at any time, at Settings &gt; Privacy &gt; AI processing.</li>
+                                <li>We are moving every account to this permission. Until that is finished, AI processing also runs for accounts that have not made a choice yet, including accounts created before this permission existed. This covers the features you use in the app and the scheduled weekly coach brief, career suggestions and project drift reasons.</li>
+                                <li>If we cannot check your choice because of a temporary error, processing continues during this period. This is the only case where a withdrawal may not take effect right away.</li>
+                                <li>When the move is finished, AI processing will run only for accounts that chose Allow AI processing. We will update this policy when that change happens.</li>
+                                <li>If you withdraw, AI processing stops for your account, during this period and after it, apart from the temporary error case above. Transfers that already happened cannot be undone.</li>
+                                <li>Content already stored in Speakfolio stays until you delete it.</li>
+                            </ul>
+                        </div>
                     </div>
                 </details>
 
@@ -215,10 +268,11 @@
                     <div class="p-6 pt-0 text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-brand-rose/10">
                         <ul class="list-disc ml-6 space-y-2">
                             <li><strong class="text-[#1A1A1A] dark:text-white">Access:</strong> Request a copy of your personal data</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Delete:</strong> Delete your account and all associated data at any time</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Delete:</strong> Request deletion of your account and associated data in Privacy &amp; Data settings</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Export:</strong> Download your data in machine-readable format (JSON)</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Opt Out:</strong> Disable analytics tracking in app settings</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Opt Out:</strong> Contact privacy@speakfolio.app to request that we stop analytics processing associated with your account</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Revoke:</strong> Withdraw microphone permissions via device settings</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Withdraw AI permission:</strong> Turn off AI processing at Settings &gt; Privacy &gt; AI processing</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Rectify:</strong> Correct inaccurate personal information</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Object:</strong> Object to certain data processing activities</li>
                         </ul>
@@ -233,13 +287,16 @@
                     </summary>
                     <div class="p-6 pt-0 text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-brand-yellow/10">
                         <ul class="list-disc ml-6 space-y-2">
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Account data:</strong> Retained until you delete your account</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Voice recordings:</strong> Deleted immediately when you delete entries</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Transcriptions:</strong> Deleted with their associated entries</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">AI outputs:</strong> Retained until you manually delete them</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Analytics:</strong> Aggregated and anonymized after 90 days</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Error logs:</strong> Retained for 30 days</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Account data:</strong> Account deletion removes your sign-in account, application records, recordings, generated documents (including Salary Brief inputs), and stored export files through a background deletion process. A saved request is not a claim that every file has already been removed. Failed steps remain available for retry.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Entries and transcriptions:</strong> Deleting an entry moves it to Recently Deleted. It stays there until you restore it or permanently delete it, and is then removed. Permanent deletion removes the entry and its versions and queues its audio for removal when no retained entry still needs that recording. Copies of entry content in generated documents or data exports follow those items' retention rules.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Voice recordings:</strong> Automatic audio retention is disabled during the app-version transition. Recordings are kept until you permanently delete their entries or your account. When automatic retention becomes available, an updated app can confirm a choice of 1 year, 6 months, 30 days, or Delete after processing. A confirmed choice applies to existing and future recordings only while the service has enabled that feature. Every choice requires successful processing or a completed no-speech result; retryable failures and unfinished processing are preserved. Defaults, previous unconfirmed settings, and sign-in migrations never authorize deletion. Entries and transcripts remain after audio retention. Before each new retention attempt, including delayed uploads and retries, we check that the feature is enabled and your current confirmed choice permits removal. Changing a setting cannot restore audio already removed or cancel a file removal already in progress.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Unlinked audio uploads:</strong> Scheduled cleanup checks tracked, unattached uploads older than 7 days. While automatic retention is disabled, this scan does not queue deletion. Once enabled, it requires a confirmed choice, completed processing, and no retained entry or active or retryable failed job that still needs the recording. Tracking stays until file removal succeeds. Unsaved uploads without entry or job tracking, including uploads cancelled by older app versions, remain until account deletion.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">AI outputs:</strong> Generated documents, their saved inputs, and stored Word exports are removed through account deletion. Existing 90-day expiry dates do not authorize automatic deletion. The app does not currently offer individual document deletion or a document retention picker.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Data-export files:</strong> Download links expire after 7 days. Link expiry does not delete the stored ZIP or JSON file. These files, which may contain copies of entries and audio, are removed through account deletion.</li>
                         </ul>
+                        <p class="mt-4">File deletion is asynchronous. Scheduled workers remove queued objects from storage, and failed deletions are retained and retried. Service failures may delay completion. Contact <a href="mailto:privacy@speakfolio.app" class="text-brand-yellow hover:underline cursor-hover">privacy@speakfolio.app</a> if you need help with a deletion request.</p>
+                        <p class="mt-4">Minimal deletion records retain account identifiers, file paths, deletion status, the reason deletion was authorized, and recording dates needed to enforce your retention choice. We use these records to retry failures and handle delayed uploads. They do not contain your audio, entry text, or Salary Brief inputs.</p>
+                        <p class="mt-4">Deleting data in Speakfolio does not remove copies you have downloaded or shared. Separate provider logs, backups, analytics records, and payment records are governed by the relevant provider's retention settings and legal obligations; the app's deletion process does not promise immediate erasure of those records. Contact us for a request covering data held outside the application's database and file storage.</p>
                     </div>
                 </details>
 
@@ -278,7 +335,7 @@
                     <div class="p-6 pt-0 text-[#666666] dark:text-[#AAAAAA] leading-relaxed space-y-4 group-open:bg-brand-mint/10">
                         <p><strong class="text-[#1A1A1A] dark:text-white">Children:</strong> Speakfolio is not intended for users under 13. We do not knowingly collect personal information from children under 13.</p>
                         <p><strong class="text-[#1A1A1A] dark:text-white">International Transfers:</strong> Your data may be processed in the United States or other countries where our service providers operate. We ensure appropriate safeguards are in place.</p>
-                        <p><strong class="text-[#1A1A1A] dark:text-white">Changes:</strong> We may update this Privacy Policy from time to time. We will notify you of material changes via in-app notification. Continued use constitutes acceptance.</p>
+                        <p><strong class="text-[#1A1A1A] dark:text-white">Changes:</strong> We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We publish the updated policy here with a new "Last Updated" date. Your continued use of Speakfolio after changes constitutes acceptance of the updated Privacy Policy.</p>
                     </div>
                 </details>
 
