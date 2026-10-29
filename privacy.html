@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -100,7 +101,7 @@
                 <h1 class="font-heading text-5xl md:text-7xl font-medium uppercase tracking-tight leading-[0.9] mb-6">Privacy<br>Policy</h1>
                 <div class="inline-flex items-center gap-2 border-2 border-[#1A1A1A] dark:border-[#333333] px-4 py-2 rounded-md">
                     <div class="w-2 h-2 rounded-full bg-brand-mint"></div>
-                    <span class="font-mono text-[10px] uppercase">Last Updated: October 28, 2026</span>
+                    <span class="font-mono text-[10px] uppercase">Last Updated: October 29, 2026</span>
                 </div>
             </div>
         </section>
@@ -146,9 +147,11 @@
                             <h3 class="font-heading font-semibold text-[#1A1A1A] dark:text-white mb-2">Usage Data</h3>
                             <ul class="list-disc ml-6 space-y-1">
                                 <li>Device information (type, operating system version)</li>
-                                <li>App usage analytics, which may be associated with your account identifier</li>
+                                <li>App usage analytics, linked to an account identifier only. Analytics does not include your name or email address (the app change that removes them is in progress).</li>
+                                <li>Analytics does not use precise or IP-based location</li>
                                 <li>Error logs (for debugging purposes only)</li>
                                 <li>Feature usage patterns, to improve the app experience</li>
+                                <li>A notification token for your device, if you allow notifications, to send reminders</li>
                             </ul>
                         </div>
                     </div>
@@ -200,7 +203,7 @@
                             <li><strong class="text-[#1A1A1A] dark:text-white">Cloud database providers:</strong> Data storage and hosting</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Data processing services, including third-party AI services:</strong> Processing your audio recordings, transcripts and entry text to provide Speakfolio</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Payment processors:</strong> Subscription management</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Analytics providers:</strong> App usage analytics, which may include your account identifier</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Analytics providers:</strong> App usage analytics, linked to an account identifier only</li>
                         </ul>
                         <p class="mt-4">These services are bound by their own privacy policies and data processing agreements.</p>
                         <p class="mt-4">What third-party AI services receive, and your choice about it, is in the <a href="#ai-processing" class="text-brand-yellow hover:underline cursor-hover">AI Processing</a> section below. You can request the current list of these service providers at <a href="mailto:privacy@speakfolio.app" class="text-brand-yellow hover:underline cursor-hover">privacy@speakfolio.app</a>.</p>
@@ -268,7 +271,7 @@
                     <div class="p-6 pt-0 text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-brand-rose/10">
                         <ul class="list-disc ml-6 space-y-2">
                             <li><strong class="text-[#1A1A1A] dark:text-white">Access:</strong> Request a copy of your personal data</li>
-                            <li><strong class="text-[#1A1A1A] dark:text-white">Delete:</strong> Request deletion of your account and associated data in Privacy &amp; Data settings</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Delete:</strong> Request deletion of your account and associated data in Privacy &amp; Data settings. See <a href="delete-account.html" class="text-brand-yellow hover:underline cursor-hover">how to delete your account and data</a>, including by email if you no longer have the app.</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Export:</strong> Download your data in machine-readable format (JSON)</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Opt Out:</strong> Contact privacy@speakfolio.app to request that we stop analytics processing associated with your account</li>
                             <li><strong class="text-[#1A1A1A] dark:text-white">Revoke:</strong> Withdraw microphone permissions via device settings</li>
@@ -280,7 +283,7 @@
                     </div>
                 </details>
 
-                <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover">
+                <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover" id="data-retention">
                     <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-heading font-semibold uppercase group-open:bg-brand-yellow/10 transition-colors">
                         Data Retention
                         <iconify-icon icon="solar:add-circle-linear" class="text-brand-yellow group-open:rotate-45 transition-transform" width="24"></iconify-icon>
@@ -396,6 +399,9 @@
         const hoverElements = document.querySelectorAll('.cursor-hover, a, button, details');
         document.addEventListener('mousemove', (e) => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
         hoverElements.forEach(el => { el.addEventListener('mouseenter', () => cursor.classList.add('hovered')); el.addEventListener('mouseleave', () => cursor.classList.remove('hovered')); });
+        function openHashSection() { const el = location.hash && document.getElementById(location.hash.slice(1)); if (el && el.tagName === 'DETAILS') { el.open = true; el.scrollIntoView(); } }
+        openHashSection();
+        window.addEventListener('hashchange', openHashSection);
     </script>
 
 </body></html>
