@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakFolio | Delete your account and data</title>
+    <meta name="description" content="How to delete your SpeakFolio account and data, what is deleted, and what may be retained.">
+    
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;family=Space+Grotesk:wght@500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { yellow: '#FFE600', coral: '#FF6B6B', mint: '#00D9A5', sky: '#4DA6FF', lavender: '#B197FC', rose: '#FFB4A2' },
+                        dark: { bg: '#0A0A0A', surface: '#1A1A1A', border: '#333333' },
+                        light: { text: '#1A1A1A', border: '#1A1A1A' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { --cursor-size: 12px; }
+        body { font-family: 'Inter', sans-serif; cursor: none; overflow-x: hidden; }
+        h1, h2, h3, h4, .font-heading { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; }
+        #cursor { position: fixed; top: 0; left: 0; width: var(--cursor-size); height: var(--cursor-size); background-color: #1A1A1A; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s; mix-blend-mode: difference; }
+        html.dark #cursor { background-color: #FFFFFF; }
+        #cursor.hovered { transform: translate(-50%, -50%) scale(5); background-color: transparent; border: 1px solid currentColor; mix-blend-mode: normal; }
+    </style>
+    <script>
+        function updateTheme() {
+            const theme = localStorage.getItem('theme') || 'system';
+            const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.classList.toggle('dark', isDark);
+            const sun = document.getElementById('icon-sun'), system = document.getElementById('icon-system'), moon = document.getElementById('icon-moon');
+            if(sun && system && moon) {
+                [sun, system, moon].forEach(el => el.classList.remove('bg-gray-200', 'dark:bg-white/20'));
+                if (theme === 'light') sun.classList.add('bg-gray-200');
+                if (theme === 'system') system.classList.add('bg-gray-200', 'dark:bg-white/20');
+                if (theme === 'dark') moon.classList.add('dark:bg-white/20');
+            }
+        }
+        function setTheme(val) { localStorage.setItem('theme', val); updateTheme(); }
+        updateTheme();
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
+    </script>
+    <!-- PostHog Analytics -->
+    <script>
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+      posthog.init('phc_XoFkTSZeao5p1lDhYQrWPe2PAdAzBjnHdNYqxj14V4Uv',{api_host:'https://us.i.posthog.com',person_profiles:'identified_only',autocapture:true,capture_pageview:true,capture_pageleave:true})
+    </script>
+</head>
+
+<body class="bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white transition-colors duration-300">
+
+    <div id="cursor" class="hidden md:block border-2 border-transparent"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-white/90 dark:bg-[#0A0A0A]/90 backdrop-blur-md border-b-2 border-[#1A1A1A] dark:border-[#333333]">
+        <div class="flex justify-between items-center h-16 px-6">
+            <a href="./" class="cursor-hover group flex items-center gap-3">
+                <div class="w-8 h-8 bg-brand-yellow flex items-center justify-center font-heading font-bold text-black border-2 border-black group-hover:rotate-45 transition-transform duration-300">1</div>
+                <span class="font-heading font-semibold text-lg uppercase tracking-tight">SpeakFolio</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="./" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Home</a>
+                <a href="privacy.html" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Privacy</a>
+                <a href="support.html" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Support</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex border-2 border-[#1A1A1A] dark:border-[#333333] rounded-full p-1 gap-1">
+                    <button onclick="setTheme('light')" id="icon-sun" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors"><iconify-icon icon="solar:sun-linear" width="16"></iconify-icon></button>
+                    <button onclick="setTheme('system')" id="icon-system" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors"><iconify-icon icon="solar:monitor-linear" width="16"></iconify-icon></button>
+                    <button onclick="setTheme('dark')" id="icon-moon" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors"><iconify-icon icon="solar:moon-linear" width="16"></iconify-icon></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+
+        <!-- Header -->
+        <section class="py-24 px-6 border-b-2 border-[#1A1A1A] dark:border-[#333333]">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="font-mono text-[10px] uppercase tracking-widest text-gray-500">Legal</div>
+                    <div class="h-px flex-1 bg-[#1A1A1A] dark:bg-[#333333]"></div>
+                </div>
+                <h1 class="font-heading text-4xl md:text-6xl font-medium uppercase tracking-tight leading-[0.95] mb-6">Delete your SpeakFolio account and data</h1>
+                <p class="text-[#666666] dark:text-[#AAAAAA] leading-relaxed">You can delete your account and the data stored with it at any time. This page explains how, what is deleted, and what may be retained. It follows the <a href="privacy.html" class="text-brand-yellow hover:underline cursor-hover">Privacy Policy</a>.</p>
+                <p class="text-[#666666] dark:text-[#AAAAAA] leading-relaxed mt-4">SpeakFolio is made by Kentrologia Innovation Inc.</p>
+            </div>
+        </section>
+
+        <section class="py-24 px-6 border-b-2 border-[#1A1A1A] dark:border-[#333333]">
+            <div class="max-w-3xl mx-auto space-y-4">
+
+                <div class="border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg p-6 bg-brand-yellow/10">
+                    <h2 class="font-heading font-semibold uppercase mb-4">Delete in the app</h2>
+                    <div class="text-[#666666] dark:text-[#AAAAAA] leading-relaxed space-y-4">
+                        <ol class="list-decimal ml-6 space-y-2">
+                            <li>If you have a subscription, cancel it first in the App Store (iPhone) or Google Play (Android) subscriptions settings. Deleting your account does not cancel a store subscription.</li>
+                            <li>Open SpeakFolio and sign in.</li>
+                            <li>Go to <strong class="text-[#1A1A1A] dark:text-white">Settings &gt; Account &gt; Delete Account</strong>. You can also start it from <strong class="text-[#1A1A1A] dark:text-white">Settings &gt; Privacy &amp; Data</strong>.</li>
+                            <li>Confirm the deletion.</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg p-6 bg-brand-coral/10">
+                    <h2 class="font-heading font-semibold uppercase mb-4">If you no longer have the app</h2>
+                    <div class="text-[#666666] dark:text-[#AAAAAA] leading-relaxed space-y-4">
+                        <p>Email <a href="mailto:privacy@speakfolio.app?subject=Delete%20my%20account" class="text-brand-yellow hover:underline cursor-hover">privacy@speakfolio.app</a> from the email address on your SpeakFolio account, with the subject <strong class="text-[#1A1A1A] dark:text-white">Delete my account</strong>. We use the sending address to find your account, so a request from a different address cannot be matched.</p>
+                        <p>If you have a subscription, cancel it in the App Store (iPhone) or Google Play (Android) subscriptions settings. Deleting your account does not cancel a store subscription, and you can cancel there without the app.</p>
+                    </div>
+                </div>
+                <div class="border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg p-6 bg-brand-mint/10">
+                    <h2 class="font-heading font-semibold uppercase mb-4">What is deleted</h2>
+                    <div class="text-[#666666] dark:text-[#AAAAAA] leading-relaxed space-y-4">
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li>Your sign-in account</li>
+                            <li>Your profile</li>
+                            <li>Your entries, including entries in Recently Deleted</li>
+                            <li>Your voice recordings</li>
+                            <li>Your transcripts</li>
+                            <li>Your generated documents, including Salary Brief inputs</li>
+                            <li>Your stored data-export files</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg p-6 bg-brand-sky/10">
+                    <h2 class="font-heading font-semibold uppercase mb-4">When it happens</h2>
+                    <div class="text-[#666666] dark:text-[#AAAAAA] leading-relaxed space-y-4">
+                        <p>Deletion starts as soon as you confirm it in the app. For an email request, it starts once we have matched the request to your account.</p>
+                        <p>Removal of files from storage is processed in the background. Scheduled workers remove queued files, and failed steps are retained and retried. Service failures may delay completion. A saved request is not a claim that every file has already been removed.</p>
+                    </div>
+                </div>
+                <div class="border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg p-6 bg-brand-lavender/10">
+                    <h2 class="font-heading font-semibold uppercase mb-4">What may be retained</h2>
+                    <div class="text-[#666666] dark:text-[#AAAAAA] leading-relaxed space-y-4">
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Payment records:</strong> kept by the Apple App Store, Google Play Store, or Stripe, depending on how you purchased. How long: kept only as long as required by law or for the provider's own billing and security records.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Analytics records:</strong> held by our analytics provider. How long: set by the provider's retention settings. Our Privacy Policy does not state a fixed period.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Service provider logs:</strong> service providers may keep request data for abuse monitoring or operations. How long: a limited time, under their own terms.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Backups:</strong> copies of your data in backups. How long: removed from backups when those backups expire.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Minimal deletion records:</strong> account identifiers, file paths, deletion status, the reason deletion was authorized, and recording dates. We use these records to retry failures and handle delayed uploads. They do not contain your audio, entry text, or Salary Brief inputs. How long: our Privacy Policy does not state a fixed period.</li>
+                            <li><strong class="text-[#1A1A1A] dark:text-white">Legal obligations:</strong> anything we or our service providers are required by law to keep. How long: as long as the law requires.</li>
+                        </ul>
+                        <p>The deletion process does not promise immediate erasure of records held by these providers. Deleting your account does not remove copies you have downloaded or shared.</p>
+                        <p>For a request covering data held outside the application's database and file storage, or for help with any deletion request, contact <a href="mailto:privacy@speakfolio.app" class="text-brand-yellow hover:underline cursor-hover">privacy@speakfolio.app</a>. Full details are in the <a href="privacy.html#data-retention" class="text-brand-yellow hover:underline cursor-hover">Data Retention</a> section of the Privacy Policy.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-[#0A0A0A] text-white py-12 px-6 border-t-2 border-[#1A1A1A]">
+            <div class="max-w-3xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8 py-8">
+                    <div>
+                        <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Product</h5>
+                        <ul class="space-y-2 font-heading text-lg">
+                            <li><a href="./" class="hover:text-brand-yellow transition-colors cursor-hover">Home</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Legal</h5>
+                        <ul class="space-y-2 font-heading text-lg">
+                            <li><a href="privacy.html" class="hover:text-brand-yellow transition-colors cursor-hover">Privacy</a></li>
+                            <li><a href="delete-account.html" class="text-brand-yellow cursor-hover">Delete account</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Help</h5>
+                        <ul class="space-y-2 font-heading text-lg">
+                            <li><a href="support.html" class="hover:text-brand-yellow transition-colors cursor-hover">Support</a></li>
+                            <li><a href="mailto:support@speakfolio.app" class="hover:text-brand-yellow transition-colors cursor-hover">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex justify-between items-end pb-4 pt-4 font-mono text-[10px] text-gray-600 uppercase">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 rounded-full bg-brand-yellow"></div>
+                        <span>2026 SpeakFolio</span>
+                    </div>
+                    <span>Your voice, your wins, your story.</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        const hoverElements = document.querySelectorAll('.cursor-hover, a, button, details');
+        document.addEventListener('mousemove', (e) => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+        hoverElements.forEach(el => { el.addEventListener('mouseenter', () => cursor.classList.add('hovered')); el.addEventListener('mouseleave', () => cursor.classList.remove('hovered')); });
+    </script>
+
+</body></html>
