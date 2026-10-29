@@ -59,6 +59,6 @@ Footer Legal column links to delete-account.html as "Delete account".
 
 ### Checks
 
-1. html-validate (document preset) on privacy.html and delete-account.html: only the inherited require-sri, footer heading-level and doctype-style findings, the same set as before this pass.
+1. html-validate (document preset) on privacy.html and delete-account.html: only the inherited require-sri (CDN scripts and fonts) and heading-level (footer `<h5>`, and `<h3>` inside the privacy accordion) findings, the same set as before this pass.
 2. All internal links and fragment targets on privacy.html, delete-account.html and index.html resolve.
 3. Rendered in Chromium at 375px with every details section open: no horizontal scroll, no em or en dashes in visible text, no AI vendor, model or provider names.
