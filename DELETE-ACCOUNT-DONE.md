@@ -35,3 +35,30 @@ Footer Legal column links to delete-account.html as "Delete account".
 
 1. html-validate (document preset): no structural errors. The only findings are missing SRI attributes on the CDN scripts and fonts, and footer `<h5>` heading order, both inherited from the existing template.
 2. Rendered visible text of all three pages (with every details section open), checked in Chromium: no em or en dashes and no AI vendor or model names. No em dashes in the source either.
+
+## Review fix pass
+
+### privacy.html
+
+1. Usage Data and Data Sharing analytics lines now carry the same sentence: "From app version 1.1.4 on iOS and the matching Android update, analytics use a random account identifier only and never include your name or email address. Earlier app versions may have included them."
+2. Voice Recordings (Information We Collect) now matches Data Retention: automatic audio deletion is currently off, and the audio retention choice in Privacy & Data settings is coming in an app update. Until then, recordings stay until the entry is permanently deleted from Recently Deleted or the account is deleted.
+3. Footer Legal column has the "Delete account" link to delete-account.html, matching index.html and delete-account.html.
+4. AI Processing permission wording checked and left as is. No line on the page claims consent is required for every account today; the Permission list states that processing also runs for accounts that have not made a choice yet.
+
+### delete-account.html
+
+1. Header adds "SpeakFolio is made by Kentrologia Innovation Inc." (developer name as in terms.html).
+2. Delete in the app: new first step to cancel any subscription in App Store (iPhone) or Google Play (Android) subscriptions settings, since deleting the account does not cancel a store subscription. The email path is unchanged.
+3. What may be retained: each category now states how long, using only what privacy.html and terms.html already say. Neither document states a day count for any of these, so none was added.
+   1. Payment records: kept only as long as required by law or for the provider's own billing and security records.
+   2. Analytics records: set by the provider's retention settings; the Privacy Policy states no fixed period.
+   3. Service provider logs: a limited time, under their own terms (from privacy.html).
+   4. Backups (now its own item): removed from backups when those backups expire.
+   5. Minimal deletion records: the Privacy Policy states no fixed period.
+   6. Legal obligations: as long as the law requires.
+
+### Checks
+
+1. html-validate (document preset) on privacy.html and delete-account.html: only the inherited require-sri, footer heading-level and doctype-style findings, the same set as before this pass.
+2. All internal links and fragment targets on privacy.html, delete-account.html and index.html resolve.
+3. Rendered in Chromium at 375px with every details section open: no horizontal scroll, no em or en dashes in visible text, no AI vendor, model or provider names.
