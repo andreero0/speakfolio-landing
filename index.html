@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpeakFolio | Career Documentation for Professionals</title>
-    <meta name="description" content="Capture your wins automatically. Walk into your next review with proof, not panic.">
+    <title>SpeakFolio | Your work wins, ready for review</title>
+    <meta name="description" content="Record a 30-second voice note when something goes well. SpeakFolio turns it into review-ready proof. Free on iPhone and Android.">
     
     <!-- Icons & Fonts -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
@@ -45,13 +46,12 @@
             }
         }
 
-        // ========== LAUNCH CONFIG ==========
+        // ========== SITE CONFIG ==========
         const SPEAKFOLIO_CONFIG = {
-            launched: true,  // App Store live March 17, 2026
             appStoreUrl: 'https://apps.apple.com/app/speakfolio/id6757969505',
-            supabaseUrl: 'https://dbvskatzmqobmrbxhkjj.supabase.co',
-            supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRidnNrYXR6bXFvYm1yYnhoa2pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NTY4NTAsImV4cCI6MjA4MzQzMjg1MH0.cR1A8Cyrgv5qyiF53ImX_VxddhHX1PHyE33fVMW7LlY',
-            waitlistCount: 0, // Loaded dynamically from Supabase
+            playStoreUrl: 'https://play.google.com/store/apps/details?id=com.speakfolio.app',
+            hubUrl: 'https://speakfoliohub.kentrologia.com/',
+            hubOpen: false, // flip to true once the web Hub is out of Cloudflare Access
         };
     </script>
 
@@ -211,7 +211,7 @@
             <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-8">
                 <a href="#how-it-works" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">How It Works</a>
-                <a href="#features" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Features</a>
+                <a href="#features" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">What You Get</a>
                 <a href="#pricing" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Pricing</a>
             </div>
 
@@ -219,724 +219,394 @@
             <div class="flex items-center gap-4">
                 <!-- Theme Toggle -->
                 <div class="hidden md:flex border-2 border-[#1A1A1A] dark:border-[#333333] rounded-full p-1 gap-1">
-                    <button onclick="setTheme('light')" id="icon-sun" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
+                    <button onclick="setTheme('light')" id="icon-sun" aria-label="Light theme" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
                         <iconify-icon icon="solar:sun-linear" width="16"></iconify-icon>
                     </button>
-                    <button onclick="setTheme('system')" id="icon-system" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
+                    <button onclick="setTheme('system')" id="icon-system" aria-label="System theme" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
                         <iconify-icon icon="solar:monitor-linear" width="16"></iconify-icon>
                     </button>
-                    <button onclick="setTheme('dark')" id="icon-moon" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
+                    <button onclick="setTheme('dark')" id="icon-moon" aria-label="Dark theme" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
                         <iconify-icon icon="solar:moon-linear" width="16"></iconify-icon>
                     </button>
                 </div>
 
                 <!-- CTA -->
-                <a href="#waitlist" class="hidden md:flex cursor-hover items-center gap-2 bg-brand-yellow text-black border-2 border-black px-4 py-2 font-heading font-semibold text-sm uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all launch-cta" data-launched="Download Free" data-waitlist="Start Free">
-                    Start Free <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
+                <a href="#download" class="hidden md:flex cursor-hover items-center gap-2 bg-brand-yellow text-black border-2 border-black px-4 py-2 font-heading font-semibold text-sm uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+                    Get the App <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
                 </a>
-                
+
                 <!-- Mobile Menu Icon -->
-                <button onclick="toggleMobileMenu()" class="md:hidden cursor-hover text-[#1A1A1A] dark:text-white">
+                <button onclick="toggleMobileMenu()" class="md:hidden cursor-hover text-[#1A1A1A] dark:text-white" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu" id="menu-button">
                     <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu md:hidden border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+        <div id="mobile-menu" inert aria-hidden="true" class="mobile-menu md:hidden border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
             <div class="flex flex-col p-6 space-y-4">
                 <a href="#how-it-works" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">How It Works</a>
-                <a href="#features" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Features</a>
+                <a href="#features" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">What You Get</a>
                 <a href="#pricing" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Pricing</a>
-                <a href="#waitlist" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Join Waitlist</a>
+                <a href="#download" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Get the App</a>
+                <a href="https://speakfoliohub.kentrologia.com/" data-hub-link hidden class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">Sign in on the web</a>
             </div>
         </div>
     </nav>
 
     <main class="pt-16">
-        
-        <!-- Hero Section (Accent: Yellow) -->
-        <header class="min-h-[90vh] flex flex-col justify-center relative border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-grid-pattern overflow-hidden">
-            <div class="max-w-[1400px] mx-auto w-full px-6 py-20 relative z-10">
-                
-                <!-- Top Tags -->
-                <div class="flex justify-between items-center mb-16">
+
+        <!-- Hero -->
+        <header class="min-h-[85vh] flex flex-col justify-center relative border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-grid-pattern overflow-hidden">
+            <div class="max-w-[1400px] mx-auto w-full px-6 py-16 md:py-20 relative z-10">
+                <div class="flex justify-between items-center gap-4 mb-12 md:mb-16">
                     <div class="flex items-center gap-2 border border-[#1A1A1A] dark:border-[#333333] px-3 py-1 bg-white dark:bg-[#1A1A1A] rounded-md">
-                        <div class="w-2 h-2 rounded-full bg-brand-mint animate-pulse"></div>
-                        <span class="font-mono text-[10px] uppercase">Beta Access Open</span>
+                        <div class="w-2 h-2 rounded-full bg-brand-mint"></div>
+                        <span class="font-mono text-[10px] uppercase">On iPhone and Android</span>
                     </div>
-                    <span class="font-mono text-[10px] uppercase text-gray-500">For Professionals</span>
+                    <span class="font-mono text-[10px] uppercase text-gray-600 dark:text-gray-400">For Professionals</span>
                 </div>
 
-                <!-- Staggered Headlines -->
-                <div class="space-y-2 mb-12">
-                    <div class="reveal-text overflow-hidden">
-                        <h1 class="font-heading text-6xl md:text-8xl lg:text-9xl font-medium uppercase tracking-tight leading-[0.9]">
-                            Stop
-                        </h1>
-                    </div>
-                    <div class="reveal-text overflow-hidden pl-12 md:pl-32">
-                        <h1 class="font-heading text-6xl md:text-8xl lg:text-9xl font-medium uppercase tracking-tight leading-[0.9] text-outline text-[#1A1A1A] dark:text-white">
-                            Scrambling
-                        </h1>
-                    </div>
-                    <div class="reveal-text overflow-hidden">
-                        <h1 class="font-heading text-6xl md:text-8xl lg:text-9xl font-medium uppercase tracking-tight leading-[0.9]">
-                            Start Getting <span class="text-brand-yellow">Recognized</span>
-                        </h1>
-                    </div>
-                </div>
+                <h1 class="space-y-2 mb-12">
+                    <span class="reveal-text overflow-hidden block"><span class="block font-heading text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium uppercase tracking-tight leading-[0.9]">Stop</span></span>
+                    <span class="reveal-text overflow-hidden block pl-0 md:pl-32"><span class="block font-heading text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium uppercase tracking-tight leading-[0.9] text-outline text-[#1A1A1A] dark:text-white">Scrambling</span></span>
+                    <span class="reveal-text overflow-hidden block"><span class="block font-heading text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium uppercase tracking-tight leading-[0.9]">Start Getting <span class="bg-brand-yellow text-black px-2">Recognized</span></span></span>
+                </h1>
 
-                <!-- Subhead & CTA -->
-                <div class="max-w-xl">
-                    <p class="font-sans text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
-                        Your accomplishments disappear the moment they happen. SpeakFolio captures them automatically, so when review season hits, you're prepared with proof, not panic.
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
+                    <p class="text-lg md:text-xl leading-relaxed max-w-xl text-gray-700 dark:text-gray-300">
+                        When something goes well at work, record a 30-second voice note. SpeakFolio turns it into a dated, review-ready record of what you did, so review season starts with proof, not panic.
                     </p>
-                    
-                    <!-- Hero CTA - Waitlist or App Store -->
-                    <div id="hero-cta">
-                        <!-- Success message -->
-                        <div id="hero-waitlist-success" class="hidden bg-brand-mint border-2 border-black px-6 py-4 mb-4 font-heading font-semibold text-black uppercase">
-                            You're on the list!
-                        </div>
-                        
-                        <!-- CTA Container: Primary + Secondary side-by-side -->
-                        <div class="flex flex-col md:flex-row gap-4 items-start mb-3">
-                            <!-- Primary CTA: Waitlist Form (waitlist mode) -->
-                            <form id="hero-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'hero')" class="flex flex-col sm:flex-row gap-3 flex-1">
-                                <input type="email" required placeholder="your@email.com" class="px-4 py-4 rounded-md border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-sm focus:outline-none focus:border-brand-yellow w-full sm:flex-1">
-                                <button type="submit" class="cursor-hover hover-lift inline-flex items-center justify-center gap-2 bg-brand-yellow border-2 border-[#1A1A1A] px-8 py-4 font-heading font-semibold text-black uppercase tracking-tight whitespace-nowrap">
-                                    Join Waitlist <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
-                                </button>
-                            </form>
-                            
-                            <!-- Primary CTA: App Store button (launched mode) -->
-                            <a id="hero-app-store" href="https://apps.apple.com/app/speakfolio/id6757969505" class="hidden cursor-hover hover-lift inline-flex items-center justify-center">
-                                <!-- Light mode badge -->
-                                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" class="h-14 dark:hidden" style="height:56px;">
-                                <!-- Dark mode badge -->
-                                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-us?size=250x83" alt="Download on the App Store" class="h-14 hidden dark:inline" style="height:56px;">
+                    <div class="flex flex-col gap-4">
+                        <div class="store-badges flex flex-wrap items-center gap-3 ">
+                            <a href="https://apps.apple.com/app/speakfolio/id6757969505" data-store="app_store" data-placement="hero" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Download SpeakFolio on the App Store">
+                                <img src="assets/appstore-black.svg" alt="Download on the App Store" class="h-12 w-auto dark:hidden" height="48">
+                                <img src="assets/appstore-white.svg" alt="Download on the App Store" class="h-12 w-auto hidden dark:inline" height="48">
                             </a>
-                            
-                            <!-- Secondary CTA: See How It Works -->
-                            <a href="#how-it-works" class="cursor-hover hover-lift inline-flex items-center justify-center bg-transparent border-2 border-[#1A1A1A] dark:border-white text-[#1A1A1A] dark:text-white px-8 py-4 font-heading font-semibold uppercase tracking-tight hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors w-full md:w-auto whitespace-nowrap">
-                                See How It Works
+                            <a href="https://play.google.com/store/apps/details?id=com.speakfolio.app" data-store="google_play" data-placement="hero" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Get SpeakFolio on Google Play">
+                                <img src="assets/google-play.png" alt="Get it on Google Play" class="h-12 w-auto rounded-[7px] border border-[#A6A6A6]" height="48">
                             </a>
                         </div>
-                        
-                        <!-- Subtle trust text -->
-                        <p class="text-gray-500 dark:text-gray-600 font-mono text-xs">
-                            No credit card required. Free plan available.
-                        </p>
-
-                        <!-- Product Hunt badge -->
-                        <div class="mt-4">
-                            <a href="https://www.producthunt.com/products/speakfolio?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-speakfolio" target="_blank" rel="noopener noreferrer" class="dark:hidden inline-block">
-                                <img alt="Featured on Product Hunt" width="200" height="43" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1101327&theme=light">
-                            </a>
-                            <a href="https://www.producthunt.com/products/speakfolio?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-speakfolio" target="_blank" rel="noopener noreferrer" class="hidden dark:inline-block">
-                                <img alt="Featured on Product Hunt" width="200" height="43" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1101327&theme=dark">
-                            </a>
-                        </div>
+                        <p class="font-mono text-[10px] uppercase text-gray-600 dark:text-gray-400">Free to download. Free plan, no card needed.</p>
+                        <a href="https://speakfoliohub.kentrologia.com/" data-hub-link hidden class="hub-link cursor-hover font-mono text-xs uppercase underline underline-offset-4 decoration-2 hover:text-brand-sky ">Already on SpeakFolio? Sign in on the web &rarr;</a>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Marquee (Accent: Yellow) -->
-        <div class="border-b-2 border-[#1A1A1A] dark:border-[#333333] py-4 bg-brand-yellow text-black overflow-hidden relative z-20">
-            <div class="marquee-container">
-                <div class="marquee-content font-mono text-sm font-bold uppercase tracking-widest">
-                    Your Voice • Your Wins • Your Story • Self-Eval in 10 Minutes • Never Forget a Win • Review-Ready Proof • Career Documentation • Your Voice • Your Wins • Your Story • Self-Eval in 10 Minutes • Never Forget a Win • Review-Ready Proof • Career Documentation •
-                </div>
+        <!-- Marquee -->
+        <div class="bg-brand-yellow text-black border-b-2 border-[#1A1A1A] py-3 marquee-container" aria-hidden="true">
+            <div class="marquee-content font-heading text-lg uppercase tracking-tight">
+                Your Voice &bull; Your Wins &bull; Your Story &bull; Never Forget a Win &bull; Review-Ready Proof &bull; Career Documentation &bull; Your Voice &bull; Your Wins &bull; Your Story &bull; Never Forget a Win &bull; Review-Ready Proof &bull; Career Documentation &bull;
             </div>
         </div>
 
-        <!-- Intro / Value Prop (Accent: Yellow) -->
-        <section class="grid grid-cols-1 lg:grid-cols-12 border-b-2 border-[#1A1A1A] dark:border-[#333333]">
-            <div class="lg:col-span-7 border-b-2 lg:border-b-0 lg:border-r-2 border-[#1A1A1A] dark:border-[#333333] relative group overflow-hidden h-[500px] lg:h-auto">
-                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105" alt="Professional at work">
-                <div class="absolute inset-0 bg-brand-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            </div>
-            <div class="lg:col-span-5 p-10 lg:p-16 flex flex-col justify-center bg-white dark:bg-[#0A0A0A]">
-                <iconify-icon icon="solar:microphone-3-linear" class="text-[#1A1A1A] dark:text-white text-4xl mb-8"></iconify-icon>
-                <h2 class="font-heading text-3xl md:text-4xl font-semibold uppercase leading-tight mb-6">
-                    You did the work.<br>You deserve the credit.
-                </h2>
-                <p class="font-sans text-gray-600 dark:text-gray-400 leading-relaxed mb-10">
-                    You shouldn't have to choose between doing your job and documenting it. SpeakFolio runs quietly in the background, capturing what you accomplish as it happens, then organizes it so you can walk into any review or negotiation with receipts already written. No more relying on a manager who "meant to write that down."
-                </p>
-                <a href="#how-it-works" class="cursor-hover inline-block font-heading font-semibold text-lg border-b-2 border-transparent hover:border-brand-yellow transition-colors w-max">
-                    See How It Works
-                </a>
-            </div>
-        </section>
-
-        <!-- Pain Points (Accent: Coral) -->
-        <section class="py-24 border-b-2 border-[#1A1A1A] dark:border-[#333333] overflow-hidden bg-[#FAFAFA] dark:bg-[#0F0F0F]">
-            <div class="px-6 max-w-[1400px] mx-auto mb-16">
-                <span class="font-mono text-xs text-brand-coral uppercase tracking-wider mb-2 block">Sound Familiar?</span>
-                <h2 class="font-heading text-4xl md:text-5xl uppercase tracking-tight">The quiet dread you know too well</h2>
-            </div>
-
-            <!-- Horizontal Scroll Cards -->
-            <div class="flex overflow-x-auto snap-x snap-mandatory gap-8 px-6 pb-12 no-scrollbar">
-                
-                <!-- Card 1 -->
-                <div class="min-w-[320px] md:min-w-[400px] snap-center bg-white dark:bg-[#1A1A1A] border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg cursor-hover group hover:border-brand-coral transition-colors">
-                    <div class="h-48 mb-6 overflow-hidden border-2 border-[#1A1A1A] dark:border-[#333333] rounded">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Stress">
-                    </div>
-                    <span class="inline-block bg-brand-coral text-white font-mono text-[10px] px-2 py-1 rounded mb-4">PROBLEM</span>
-                    <h3 class="font-heading text-2xl uppercase mb-3">The Blank Page Panic</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                        It's 11 PM. Your self-eval is due. Your stomach knots as you stare at the empty doc. You crushed it this quarter, but the details are gone. You write three vague bullets while your coworker submits a novel.
-                    </p>
+        <!-- Proof: before / after -->
+        <section class="py-20 md:py-24 bg-white dark:bg-[#0A0A0A] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="mb-12">
+                    <span class="font-mono text-xs uppercase text-[#1F5FA8] dark:text-brand-sky">See the difference</span>
+                    <h2 class="font-heading text-3xl md:text-5xl uppercase tracking-tight mt-2">30 seconds in. Review-ready out.</h2>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="min-w-[320px] md:min-w-[400px] snap-center bg-white dark:bg-[#1A1A1A] border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg cursor-hover group hover:border-brand-coral transition-colors">
-                    <div class="h-48 mb-6 overflow-hidden border-2 border-[#1A1A1A] dark:border-[#333333] rounded">
-                        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=2068&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Empty Desk">
-                    </div>
-                    <span class="inline-block bg-brand-coral text-white font-mono text-[10px] px-2 py-1 rounded mb-4">PROBLEM</span>
-                    <h3 class="font-heading text-2xl uppercase mb-3">The Brag Doc Graveyard</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                        You started a Google Doc in January. Added two items. Never opened it again. It sits there, a monument to good intentions. Six months of achievements vanish into the blur of "staying busy."
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="min-w-[320px] md:min-w-[400px] snap-center bg-white dark:bg-[#1A1A1A] border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg cursor-hover group hover:border-brand-coral transition-colors">
-                    <div class="h-48 mb-6 overflow-hidden border-2 border-[#1A1A1A] dark:border-[#333333] rounded">
-                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500" alt="Meeting">
-                    </div>
-                    <span class="inline-block bg-brand-coral text-white font-mono text-[10px] px-2 py-1 rounded mb-4">RESULT</span>
-                    <h3 class="font-heading text-2xl uppercase mb-3">The Promotion That Wasn't</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                        They got promoted. You had the work. They were louder. They had the stories, the narrative you couldn't articulate. Watching someone else get the role you earned is worse than playing the game.
-                    </p>
-                </div>
-
-                <!-- CTA Card -->
-                <div class="min-w-[320px] md:min-w-[400px] snap-center bg-brand-yellow border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg cursor-hover flex flex-col justify-center items-center text-center">
-                    <iconify-icon icon="solar:crown-star-linear" class="text-4xl text-black mb-6"></iconify-icon>
-                    <h3 class="font-heading text-3xl font-bold uppercase mb-4 text-black">Take Control</h3>
-                    <p class="font-mono text-sm text-black mb-8 max-w-xs">
-                        143 documented wins. All real. All with dates and details and impact.
-                    </p>
-                    <a href="#waitlist" class="border-2 border-black bg-black text-brand-yellow px-6 py-3 font-heading uppercase text-sm hover:bg-transparent hover:text-black transition-colors launch-cta" data-launched="Download Free" data-waitlist="Start Capturing">
-                        Start Capturing
-                    </a>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Features (Accent: Mint) -->
-        <section id="features" class="border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
-            <div class="p-10 border-b-2 border-[#1A1A1A] dark:border-[#333333] text-center">
-                <h2 class="font-heading text-4xl uppercase tracking-tight">What changes when you stop forgetting</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                <!-- Feature 1 -->
-                <div class="group p-10 border-b-2 md:border-r-2 border-[#1A1A1A] dark:border-[#333333] hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-[#1A1A1A] cursor-hover transition-colors duration-300 relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8 relative z-10">
-                        <span class="font-mono text-xs bg-brand-mint text-black px-2 py-1 rounded">01</span>
-                        <iconify-icon icon="solar:tea-cup-linear" class="text-2xl group-hover:text-brand-mint transition-colors"></iconify-icon>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase mb-4 relative z-10">The Anxiety Disappears</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-300 relative z-10">
-                        Stop waking up at 3 AM trying to remember what you accomplished. Every shipped project is captured. When review time comes, you're picking hits, not excavating memory.
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="group p-10 border-b-2 lg:border-r-2 border-[#1A1A1A] dark:border-[#333333] hover:bg-[#1A1A1A] hover:text-white cursor-hover transition-colors duration-300 relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8 relative z-10">
-                        <span class="font-mono text-xs bg-brand-mint text-black px-2 py-1 rounded">02</span>
-                        <iconify-icon icon="solar:document-add-linear" class="text-2xl group-hover:text-brand-mint transition-colors"></iconify-icon>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase mb-4 relative z-10">You Become the Person with Receipts</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-300 relative z-10">
-                        SpeakFolio hands you a timeline of what you built and solved. You're not starting from zero. You're the person who walks in prepared while everyone else scrambles.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="group p-10 border-b-2 md:border-r-2 lg:border-r-0 border-[#1A1A1A] dark:border-[#333333] hover:bg-[#1A1A1A] hover:text-white cursor-hover transition-colors duration-300 relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8 relative z-10">
-                        <span class="font-mono text-xs bg-brand-mint text-black px-2 py-1 rounded">03</span>
-                        <iconify-icon icon="solar:megaphone-linear" class="text-2xl group-hover:text-brand-mint transition-colors"></iconify-icon>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase mb-4 relative z-10">Advocate Without the Cringe</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-300 relative z-10">
-                        You don't need to be louder. You need better evidence. SpeakFolio gives you the specific stories and metrics so you can advocate with facts, not fluff.
-                    </p>
-                </div>
-
-                <!-- Feature 4 -->
-                <div class="group p-10 border-b-2 lg:border-b-0 lg:border-r-2 border-[#1A1A1A] dark:border-[#333333] hover:bg-[#1A1A1A] hover:text-white cursor-hover transition-colors duration-300 relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8 relative z-10">
-                        <span class="font-mono text-xs bg-brand-mint text-black px-2 py-1 rounded">04</span>
-                        <iconify-icon icon="solar:clock-circle-linear" class="text-2xl group-hover:text-brand-mint transition-colors"></iconify-icon>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase mb-4 relative z-10">30 Seconds That Compound</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-300 relative z-10">
-                        Tap one button. Talk for 30 seconds. By the time you park, it's documented. Do this twice a week and you'll have 100+ entries by review season.
-                    </p>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="group p-10 border-b-2 md:border-b-0 md:border-r-2 border-[#1A1A1A] dark:border-[#333333] hover:bg-[#1A1A1A] hover:text-white cursor-hover transition-colors duration-300 relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8 relative z-10">
-                        <span class="font-mono text-xs bg-brand-mint text-black px-2 py-1 rounded">05</span>
-                        <iconify-icon icon="solar:magic-stick-3-linear" class="text-2xl group-hover:text-brand-mint transition-colors"></iconify-icon>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase mb-4 relative z-10">Messy Thoughts, Polished</h3>
-                    <p class="font-sans text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-300 relative z-10">
-                        State-of-the-art language processing extracts the who, what, and impact you'd forget. Like having a professional writer following you, but it's just your phone.
-                    </p>
-                </div>
-
-                <!-- Feature 6 (CTA) -->
-                <a href="#waitlist" class="group p-10 flex flex-col justify-center items-center bg-gray-50 dark:bg-[#111] hover:bg-brand-mint hover:text-black cursor-hover transition-colors duration-300 launch-cta" data-launched="https://apps.apple.com/app/speakfolio/id6757969505" data-waitlist="#waitlist">
-                    <iconify-icon icon="solar:arrow-right-linear" class="text-4xl mb-4"></iconify-icon>
-                    <h3 class="font-heading text-xl uppercase font-bold">Start Building Your Record</h3>
-                </a>
-            </div>
-        </section>
-
-        <!-- How It Works (Sticky Scroll, Accent: Sky Blue) -->
-        <section id="how-it-works" class="relative bg-white dark:bg-[#0A0A0A] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-                
-                <!-- Sticky Left -->
-                <div class="hidden lg:flex flex-col justify-between h-screen sticky top-0 p-12 border-r-2 border-[#1A1A1A] dark:border-[#333333]">
-                    <div>
-                        <div class="flex items-center gap-2 text-brand-sky mb-4">
-                            <iconify-icon icon="solar:settings-minimalistic-linear"></iconify-icon>
-                            <span class="font-mono text-xs uppercase tracking-widest">How It Works</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 border-2 border-[#1A1A1A] dark:border-[#333333]">
+                    <div class="p-6 md:p-10 border-b-2 md:border-b-0 md:border-r-2 border-[#1A1A1A] dark:border-[#333333] bg-[#FAFAFA] dark:bg-[#111]">
+                        <div class="flex items-center gap-2 mb-6">
+                            <iconify-icon icon="solar:microphone-3-linear" class="text-2xl"></iconify-icon>
+                            <span class="font-mono text-xs uppercase">What you say</span>
                         </div>
-                        <h2 class="font-heading text-5xl uppercase tracking-tighter leading-[1.1]">
-                            Talk like you're<br>telling a friend.<br>We handle the rest.
-                        </h2>
-                    </div>
-                    <div>
-                        <p class="font-sans text-gray-600 dark:text-gray-400 mb-8 max-w-sm">
-                            No typing. No templates. No context-switching required. Just 30 seconds when the win is fresh.
-                        </p>
-                        <a href="#waitlist" class="cursor-hover px-8 py-4 border-2 border-brand-sky text-[#1A1A1A] dark:text-white font-heading font-semibold uppercase hover:bg-brand-sky hover:text-white transition-colors inline-flex items-center gap-3 launch-cta" data-launched="Download Free" data-waitlist="Join the Waitlist">
-                            Join the Waitlist
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Scrolling Right -->
-                <div class="flex flex-col">
-                    <!-- Step 1 -->
-                    <div class="min-h-[50vh] border-b-2 border-[#1A1A1A] dark:border-[#333333] p-10 lg:p-16 flex flex-col justify-center">
-                        <div class="flex items-baseline gap-4 mb-6">
-                            <span class="font-heading text-6xl font-bold text-brand-sky opacity-50">01</span>
-                            <h3 class="font-heading text-3xl uppercase">Capture The Moment</h3>
-                        </div>
-                        <p class="font-sans text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
-                            You just shipped something. Talk into your phone for 30 seconds like you're telling a friend. Don't worry about structure or wording. Just talk.
-                        </p>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="min-h-[50vh] border-b-2 border-[#1A1A1A] dark:border-[#333333] p-10 lg:p-16 flex flex-col justify-center bg-[#FAFAFA] dark:bg-[#0F0F0F]">
-                        <div class="flex items-baseline gap-4 mb-6">
-                            <span class="font-heading text-6xl font-bold text-brand-sky opacity-50">02</span>
-                            <h3 class="font-heading text-3xl uppercase">Watch It Transform</h3>
-                        </div>
-                        <p class="font-sans text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
-                            SpeakFolio extracts the story: Situation, Task, Action, Result. Your messy rambling becomes a polished entry with metrics and impact you'd undersell.
-                        </p>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="min-h-[50vh] border-b-2 border-[#1A1A1A] dark:border-[#333333] p-10 lg:p-16 flex flex-col justify-center">
-                        <div class="flex items-baseline gap-4 mb-6">
-                            <span class="font-heading text-6xl font-bold text-brand-sky opacity-50">03</span>
-                            <h3 class="font-heading text-3xl uppercase">Build Your Library</h3>
-                        </div>
-                        <p class="font-sans text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
-                            Each entry gets tagged. Week by week, your library grows. That leadership example for your promo packet? Already there. Searchable. Safe.
-                        </p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="min-h-[50vh] p-10 lg:p-16 flex flex-col justify-center bg-[#FAFAFA] dark:bg-[#0F0F0F]">
-                        <div class="flex items-baseline gap-4 mb-6">
-                            <span class="font-heading text-6xl font-bold text-brand-sky opacity-50">04</span>
-                            <h3 class="font-heading text-3xl uppercase">Walk In Prepared</h3>
-                        </div>
-                        <p class="font-sans text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
-                            Review season? Tap "Generate." Your voice memos become a comprehensive self-evaluation. Copy/paste into HR systems. Done in 12 minutes, not 12 hours.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Mid-Page CTA (Accent: Yellow) -->
-        <section class="py-24 bg-brand-yellow text-black border-b-2 border-[#1A1A1A] dark:border-[#333333] text-center px-6">
-            <h2 class="font-heading text-4xl md:text-6xl uppercase font-bold mb-4 tracking-tighter">$10,000.</h2>
-            <h3 class="font-heading text-2xl md:text-4xl uppercase mb-6 tracking-tight">That's what you left on the table last year.</h3>
-            <p class="font-sans max-w-2xl mx-auto mb-10 text-lg">
-                The raise you didn't negotiate for because you couldn't prove you deserved it. Every win you don't capture today is ammunition you won't have tomorrow.
-            </p>
-            
-            <!-- Mid-page CTA - Waitlist Form or App Store Button -->
-            <div id="midpage-cta" class="max-w-xl mx-auto">
-                <!-- Waitlist form (shown when not launched) -->
-                <form id="midpage-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'midpage')" class="flex flex-col sm:flex-row gap-2 justify-center">
-                    <input type="email" required placeholder="your@email.com" class="px-6 py-5 border-2 border-[#1A1A1A] bg-white text-black font-mono text-lg focus:outline-none focus:border-black w-full sm:w-auto sm:flex-1">
-                    <button type="submit" class="cursor-hover inline-block bg-[#1A1A1A] text-brand-yellow px-10 py-5 font-heading text-xl uppercase tracking-tight hover:bg-white hover:text-black transition-colors rounded-md whitespace-nowrap">
-                        Join Waitlist
-                    </button>
-                </form>
-                <!-- Success message -->
-                <div id="midpage-waitlist-success" class="hidden bg-black text-brand-yellow px-10 py-5 font-heading text-xl uppercase tracking-tight rounded-md">
-                    You're on the list!
-                </div>
-                <!-- App Store button (shown when launched) -->
-                <a id="midpage-app-store" href="https://apps.apple.com/app/speakfolio/id6757969505" class="hidden cursor-hover inline-block bg-[#1A1A1A] text-brand-yellow px-10 py-5 font-heading text-xl uppercase tracking-tight hover:bg-white hover:text-black transition-colors rounded-md">
-                    Download on App Store
-                </a>
-            </div>
-            
-            <p class="font-mono text-xs mt-4 uppercase opacity-70">Career insurance. Less than your morning coffee.</p>
-        </section>
-
-        <!-- Before/After Section (Accent: Lavender) -->
-        <section class="py-24 bg-white dark:bg-[#0A0A0A] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
-            <div class="px-6 max-w-[1400px] mx-auto">
-                <div class="mb-16 text-center">
-                    <span class="font-mono text-xs text-brand-lavender uppercase tracking-widest mb-2 block">See the Difference</span>
-                    <h2 class="font-heading text-4xl uppercase">From Scrambling to Prepared</h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <!-- Before -->
-                    <div class="p-8 border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg relative bg-[#FAFAFA] dark:bg-[#111]">
-                        <div class="flex items-center gap-2 mb-4">
-                            <iconify-icon icon="solar:microphone-3-linear" class="text-2xl text-brand-coral"></iconify-icon>
-                            <span class="font-mono text-xs text-brand-coral uppercase tracking-widest">What you say (30 seconds)</span>
-                        </div>
-                        <p class="font-sans text-gray-600 dark:text-gray-300 leading-relaxed italic">
+                        <p class="text-lg italic leading-relaxed text-gray-700 dark:text-gray-300">
                             "Just got off the call with the client, they were pretty happy with the analysis we did, especially the part about the supply chain bottlenecks, we identified like three major issues they didn't even know about, they want us to do a follow-up deep dive next month, this could turn into a much bigger engagement"
                         </p>
                     </div>
-
-                    <!-- After -->
-                    <div class="p-8 border-2 border-brand-lavender/30 dark:border-brand-lavender/30 rounded-lg relative bg-[#FAFAFA] dark:bg-[#111]">
-                        <div class="flex items-center gap-2 mb-4">
-                            <iconify-icon icon="solar:document-text-linear" class="text-2xl text-brand-lavender"></iconify-icon>
-                            <span class="font-mono text-xs text-brand-lavender uppercase tracking-widest">What SpeakFolio writes</span>
+                    <div class="p-6 md:p-10 bg-brand-mint/10">
+                        <div class="flex items-center gap-2 mb-6">
+                            <iconify-icon icon="solar:document-text-linear" class="text-2xl"></iconify-icon>
+                            <span class="font-mono text-xs uppercase">What SpeakFolio writes</span>
                         </div>
-                        <ul class="space-y-4 font-sans text-gray-600 dark:text-gray-300 leading-relaxed">
-                            <li class="flex gap-2"><span class="text-brand-lavender mt-1 shrink-0">&#9656;</span> Led client analysis identifying three critical supply chain bottlenecks previously unknown to stakeholder team.</li>
-                            <li class="flex gap-2"><span class="text-brand-lavender mt-1 shrink-0">&#9656;</span> Delivered insights that prompted client to request expanded scope for Q2 engagement.</li>
-                            <li class="flex gap-2"><span class="text-brand-lavender mt-1 shrink-0">&#9656;</span> Potential pipeline expansion: follow-up deep dive scheduled, signaling increased account value.</li>
+                        <ul class="space-y-4 text-base md:text-lg">
+                            <li class="flex gap-3"><span class="text-brand-mint font-bold">&#9656;</span> Contributed to a client analysis that identified three supply chain bottlenecks the client had not been aware of.</li>
+                            <li class="flex gap-3"><span class="text-brand-mint font-bold">&#9656;</span> Client responded positively and asked for a follow-up deep dive next month.</li>
+                            <li class="flex gap-3"><span class="text-brand-mint font-bold">&#9656;</span> Possible expansion into a larger engagement.</li>
                         </ul>
                     </div>
                 </div>
+                <p class="font-mono text-[10px] uppercase text-gray-600 dark:text-gray-400 mt-4">Illustrative example. Your entries come from your own words.</p>
+            </div>
+        </section>
 
-                <div class="flex flex-wrap justify-center gap-8 mt-12 text-sm font-mono text-gray-500">
-                    <div class="flex items-center gap-2">
-                        <iconify-icon icon="solar:lock-linear" class="text-brand-lavender"></iconify-icon>
-                        Your data stays yours
+        <!-- How it works -->
+        <section id="how-it-works" class="bg-[#FAFAFA] dark:bg-[#0F0F0F] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
+            <div class="max-w-6xl mx-auto px-6 py-20 md:py-24">
+                <span class="font-mono text-xs uppercase text-[#1F5FA8] dark:text-brand-sky">How it works</span>
+                <h2 class="font-heading text-3xl md:text-5xl uppercase tracking-tighter leading-[1.05] mt-2 mb-12">Talk like you're telling a friend.<br class="hidden md:block"> SpeakFolio handles the rest.</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t-2 border-l-2 border-[#1A1A1A] dark:border-[#333333]">
+                    <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-yellow/20 transition-colors">
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">01</span>
+                        <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Capture the moment</h3>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">You just shipped something. Talk into your phone for 30 seconds. No structure, no typing.</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <iconify-icon icon="solar:clock-circle-linear" class="text-brand-lavender"></iconify-icon>
-                        30 seconds in, review-ready out
+                    <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-mint/20 transition-colors">
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">02</span>
+                        <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Watch it take shape</h3>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">SpeakFolio pulls out what you did and the result, and writes it up as a clean, dated entry.</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <iconify-icon icon="solar:buildings-2-linear" class="text-brand-lavender"></iconify-icon>
-                        Built for professionals in tech, consulting, and operations
+                    <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-sky/20 transition-colors">
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">03</span>
+                        <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Build your record</h3>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">Entries are organized by project and skill, and searchable. Week by week the record grows.</p>
+                    </div>
+                    <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-lavender/20 transition-colors">
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">04</span>
+                        <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Walk in prepared</h3>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">Review season? Pick a time range and tap Generate. Copy it, or export it to share.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 10: PRICING -->
-        <section id="pricing" class="py-24 border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-[#FAFAFA] dark:bg-[#050505]">
-            <div class="max-w-5xl mx-auto px-6">
-                <h2 class="font-heading text-4xl md:text-5xl font-semibold uppercase tracking-tight text-center mb-4">Simple Pricing. Serious Value.</h2>
-                <p class="text-center font-sans text-gray-600 dark:text-gray-400 mb-16 max-w-xl mx-auto">One raise negotiation pays for a decade. Pick the plan that fits.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Free -->
-                    <div class="border-2 border-[#1A1A1A] dark:border-[#333333] p-8 rounded-lg bg-white dark:bg-[#1A1A1A]">
-                        <span class="font-mono text-xs uppercase bg-[#F5F5F5] dark:bg-[#333] px-2 py-1 rounded mb-4 inline-block">Get Started</span>
-                        <div class="mb-8">
-                            <span class="font-heading text-5xl font-bold">$0</span><span class="font-mono text-sm">/month</span>
-                        </div>
-                        <ul class="space-y-4 mb-8 font-inter text-sm">
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-linear" class="text-[#00D9A5]"></iconify-icon> 5 voice captures per month</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-linear" class="text-[#00D9A5]"></iconify-icon> Basic STAR structuring</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-linear" class="text-[#00D9A5]"></iconify-icon> 30-day history</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-linear" class="text-[#00D9A5]"></iconify-icon> Export to text</li>
-                        </ul>
-                        <a href="#waitlist" class="cursor-hover block text-center border-2 border-[#1A1A1A] dark:border-[#333333] py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors launch-cta" data-launched="Start Free" data-waitlist="Join Waitlist">Join Waitlist</a>
+        <!-- What you get -->
+        <section id="features" class="bg-white dark:bg-[#0A0A0A] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
+            <div class="max-w-6xl mx-auto px-6 py-20 md:py-24">
+                <span class="font-mono text-xs uppercase text-[#1F5FA8] dark:text-brand-sky">What you can generate</span>
+                <h2 class="font-heading text-3xl md:text-5xl uppercase tracking-tight mt-2 mb-12">Your notes, ready for the moment that counts.</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="border-2 border-[#1A1A1A] dark:border-[#333333] p-6 md:p-8 bg-white dark:bg-[#0A0A0A] hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_#1A1A1A] dark:hover:shadow-[4px_4px_0px_0px_#333333] transition-all">
+                        <div class="w-12 h-12 bg-brand-yellow border-2 border-black flex items-center justify-center mb-6"><iconify-icon icon="solar:clipboard-check-linear" class="text-2xl text-black"></iconify-icon></div>
+                        <h3 class="font-heading text-xl uppercase mb-3">Performance reviews</h3>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">A self-evaluation built from what you actually recorded, not what you can remember the night before.</p>
                     </div>
-                    <!-- Pro Monthly -->
-                    <div class="border-2 border-[#FFE600] p-8 rounded-lg bg-white dark:bg-[#1A1A1A] relative">
-                        <span class="font-mono text-xs uppercase bg-[#FFE600] text-black px-2 py-1 rounded mb-4 inline-block absolute top-4 right-4">Most Popular</span>
-                        <div class="mb-8 mt-4">
-                            <span class="font-heading text-5xl font-bold">$9.99</span><span class="font-mono text-sm">/month</span>
-                        </div>
-                        <ul class="space-y-4 mb-8 font-inter text-sm">
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Unlimited voice captures</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Advanced STAR structuring with metrics</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Unlimited history</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Export to PDF, Word, and text</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Project tagging and search</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#FFE600]"></iconify-icon> Review generation</li>
-                        </ul>
-                        <a href="#waitlist" class="cursor-hover block text-center bg-[#FFE600] text-black border-2 border-black py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-black hover:text-[#FFE600] transition-colors launch-cta" data-launched="Start Free Trial" data-waitlist="Join Waitlist">Join Waitlist</a>
-                        <p class="text-center font-mono text-[10px] mt-3 opacity-60">30 days free. Cancel anytime.</p>
+                    <div class="border-2 border-[#1A1A1A] dark:border-[#333333] p-6 md:p-8 bg-white dark:bg-[#0A0A0A] hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_#1A1A1A] dark:hover:shadow-[4px_4px_0px_0px_#333333] transition-all">
+                        <div class="w-12 h-12 bg-brand-mint border-2 border-black flex items-center justify-center mb-6"><iconify-icon icon="solar:document-text-linear" class="text-2xl text-black"></iconify-icon></div>
+                        <h3 class="font-heading text-xl uppercase mb-3">Resume bullets</h3>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">Achievement-first bullets with the outcome up front, ready for your resume or LinkedIn.</p>
                     </div>
-                    <!-- Pro Annual -->
-                    <div class="border-2 border-[#00D9A5] p-8 rounded-lg bg-white dark:bg-[#1A1A1A] relative">
-                        <span class="font-mono text-xs uppercase bg-[#00D9A5] text-black px-2 py-1 rounded mb-4 inline-block absolute top-4 right-4">Best Value</span>
-                        <div class="mb-2 mt-4">
-                            <span class="font-heading text-5xl font-bold">$79.99</span><span class="font-mono text-sm">/year</span>
-                        </div>
-                        <p class="font-mono text-xs text-[#00D9A5] mb-8">$6.67/mo - save 33% vs monthly</p>
-                        <ul class="space-y-4 mb-8 font-inter text-sm">
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Everything in Pro, billed annually</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Unlimited voice captures</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Advanced STAR structuring with metrics</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Unlimited history + all exports</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Project tagging and search</li>
-                            <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-[#00D9A5]"></iconify-icon> Review generation</li>
-                        </ul>
-                        <a href="#waitlist" class="cursor-hover block text-center bg-[#00D9A5] text-black border-2 border-black py-3 rounded font-heading uppercase font-semibold text-sm hover:bg-black hover:text-[#00D9A5] transition-colors launch-cta" data-launched="Get Annual Plan" data-waitlist="Join Waitlist">Join Waitlist</a>
-                        <p class="text-center font-mono text-[10px] mt-3 opacity-60">Pay once. Save $39.89 per year.</p>
+                    <div class="border-2 border-[#1A1A1A] dark:border-[#333333] p-6 md:p-8 bg-white dark:bg-[#0A0A0A] hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_#1A1A1A] dark:hover:shadow-[4px_4px_0px_0px_#333333] transition-all">
+                        <div class="w-12 h-12 bg-brand-sky border-2 border-black flex items-center justify-center mb-6"><iconify-icon icon="solar:transfer-horizontal-linear" class="text-2xl text-black"></iconify-icon></div>
+                        <h3 class="font-heading text-xl uppercase mb-3">Handover documents</h3>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">Changing roles or going on leave? Hand over the context, decisions and open work in one document.</p>
                     </div>
                 </div>
-
-                <!-- Founding 100 Banner -->
-                <div class="mt-12 border-2 border-black dark:border-white bg-[#FFE600] p-8 rounded-lg text-black relative overflow-hidden">
-                    <span class="font-mono text-xs uppercase bg-black text-[#FFE600] px-2 py-1 rounded mb-4 inline-block">Limited Offer</span>
-                    <h3 class="font-heading text-3xl font-bold uppercase tracking-tight mb-2">Founding 100</h3>
-                    <div class="flex items-center justify-center gap-2 font-mono text-sm uppercase tracking-tight mb-4">
-                        <span style="display: inline-block; width: 8px; height: 8px; background: #1A1A1A; border-radius: 50%;"></span>
-                        <span><span id="founding-counter" class="font-bold">51</span> of 100 spots claimed</span>
-                    </div>
-                    <div class="mb-4">
-                        <span class="font-heading text-5xl font-bold">$49.99</span><span class="font-mono text-sm"> one-time</span>
-                    </div>
-                    <p class="font-sans text-sm mb-6 max-w-md mx-auto">Lifetime Pro access. No monthly fees, ever. All future features included. Available to the first 100 people who believed before the launch.</p>
-                    <a href="https://buy.stripe.com/9B6cN51Jhf3n7G1dmG4Ni01" class="cursor-hover inline-block bg-black text-[#FFE600] border-2 border-black px-8 py-3 font-heading uppercase font-semibold text-sm hover:bg-transparent hover:text-black transition-colors">Claim Your Spot</a>
-                    <p class="font-mono text-[10px] mt-3 opacity-70">This offer closes permanently when 100 spots are claimed.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12 font-mono text-xs uppercase">
+                    <div class="flex items-center gap-3"><iconify-icon icon="solar:lock-linear" class="text-xl"></iconify-icon> Not used to train AI models</div>
+                    <div class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-linear" class="text-xl"></iconify-icon> We never sell your data</div>
+                    <div class="flex items-center gap-3"><iconify-icon icon="solar:export-linear" class="text-xl"></iconify-icon> Export entries, delete your account</div>
                 </div>
-
             </div>
         </section>
 
-        <!-- WAITLIST SECTION -->
-        <section id="waitlist" class="py-24 px-6 border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="font-heading text-4xl md:text-5xl font-semibold uppercase tracking-tight mb-4">Get Early Access</h2>
-                <p class="text-gray-600 dark:text-gray-400 mb-12 text-lg">
-                    <span id="waitlist-counter-wrapper">Join <span id="waitlist-counter" class="font-heading font-bold text-brand-yellow">0</span> professionals on the waitlist. </span>Be first when we launch.
-                </p>
-                
-                <!-- Waitlist Form -->
-                <form id="waitlist-main-form" onsubmit="handleWaitlistSubmit(event, 'waitlist')" class="max-w-xl mx-auto">
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <input 
-                            type="email" 
-                            required 
-                            placeholder="your@email.com" 
-                            class="flex-1 px-6 py-5 border-2 border-[#1A1A1A] dark:border-white bg-white dark:bg-[#0A0A0A] text-[#1A1A1A] dark:text-white font-mono text-lg focus:outline-none focus:border-brand-yellow transition-colors"
-                        >
-                        <button 
-                            type="submit" 
-                            class="cursor-hover bg-brand-yellow text-black border-2 border-black px-10 py-5 font-heading font-semibold text-lg uppercase tracking-tight hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all whitespace-nowrap"
-                        >
-                            Join Waitlist
-                        </button>
-                    </div>
-                </form>
-                
-                <!-- Success State -->
-                <div id="waitlist-main-success" class="hidden max-w-xl mx-auto mt-8 bg-brand-mint border-2 border-black px-10 py-8 text-center">
-                    <iconify-icon icon="solar:check-circle-bold" class="text-5xl text-black mb-4"></iconify-icon>
-                    <h3 class="font-heading text-2xl font-bold text-black uppercase mb-2">You're on the list!</h3>
-                    <p class="font-sans text-black">We'll notify you as soon as SpeakFolio launches.</p>
+        <!-- Mid-page download band -->
+        <section class="py-16 md:py-20 bg-brand-yellow text-black border-b-2 border-[#1A1A1A] px-6">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
+                <div>
+                    <h2 class="font-heading text-3xl md:text-5xl uppercase font-bold tracking-tighter leading-none mb-3">Your next win is today.</h2>
+                    <p class="text-lg max-w-xl">Record it in 30 seconds while it's fresh. It will be there when review season comes.</p>
                 </div>
-                
-                <p class="font-mono text-xs text-gray-500 mt-6 uppercase tracking-wide">We respect your privacy. Unsubscribe anytime.</p>
+                <div class="store-badges flex flex-wrap items-center gap-3">
+                    <a href="https://apps.apple.com/app/speakfolio/id6757969505" data-store="app_store" data-placement="midpage" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Download SpeakFolio on the App Store">
+                        <img src="assets/appstore-black.svg" alt="Download on the App Store" class="h-12 w-auto" height="48">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.speakfolio.app" data-store="google_play" data-placement="midpage" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Get SpeakFolio on Google Play">
+                        <img src="assets/google-play.png" alt="Get it on Google Play" class="h-12 w-auto rounded-[7px] border border-[#A6A6A6]" height="48">
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- SECTION 11: FAQ -->
-        <section id="faq" class="py-24 px-6 border-t-2 border-[#1A1A1A] dark:border-[#333333]">
+        <!-- Pricing -->
+        <section id="pricing" class="py-20 md:py-24 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-[#FAFAFA] dark:bg-[#050505]">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="font-heading text-3xl md:text-5xl font-semibold uppercase tracking-tight text-center mb-4">Simple pricing</h2>
+                <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-xl mx-auto">Start free. Upgrade in the app when you want unlimited outputs.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                    <div class="border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] p-6 md:p-8 flex flex-col">
+                        <h3 class="font-heading text-2xl uppercase mb-2">Free</h3>
+                        <div class="mb-6"><span class="font-heading text-5xl font-bold">$0</span></div>
+                        <ul class="space-y-3 mb-8 text-sm flex-1">
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Unlimited voice recordings</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Entries organized by project and skill</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> 5 AI-generated outputs a month</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Text export</li>
+                        </ul>
+                        <a href="#download" class="cursor-hover block text-center border-2 border-[#1A1A1A] dark:border-[#333333] py-3 font-heading uppercase font-semibold text-sm hover:bg-[#1A1A1A] hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">Get the app</a>
+                    </div>
+                    <div class="border-2 border-black bg-white dark:bg-[#0A0A0A] p-6 md:p-8 flex flex-col shadow-[6px_6px_0px_0px_#FFE600]">
+                        <h3 class="font-heading text-2xl uppercase mb-2">Pro monthly</h3>
+                        <div class="mb-6"><span class="font-heading text-5xl font-bold">$9.99</span><span class="font-mono text-sm">/month</span></div>
+                        <ul class="space-y-3 mb-8 text-sm flex-1">
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Everything in Free</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Unlimited AI-generated outputs</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> PDF and Word export</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Advanced insights</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Career growth coaching</li>
+                        </ul>
+                        <a href="#download" class="cursor-hover block text-center bg-brand-yellow text-black border-2 border-black py-3 font-heading uppercase font-semibold text-sm hover:bg-black hover:text-brand-yellow transition-colors">Get the app</a>
+                    </div>
+                    <div class="border-2 border-black bg-white dark:bg-[#0A0A0A] p-6 md:p-8 flex flex-col relative">
+                        <span class="absolute -top-3 right-6 bg-brand-mint text-black border-2 border-black font-mono text-[10px] uppercase px-2 py-1">Save 33%</span>
+                        <h3 class="font-heading text-2xl uppercase mb-2">Pro annual</h3>
+                        <div class="mb-2"><span class="font-heading text-5xl font-bold">$79.99</span><span class="font-mono text-sm">/year</span></div>
+                        <p class="font-mono text-xs text-[#006B50] dark:text-brand-mint mb-6">About $6.67 a month, $39.89 less than 12 months of monthly</p>
+                        <ul class="space-y-3 mb-8 text-sm flex-1">
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Everything in Pro monthly</li>
+                            <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> One payment a year</li>
+                        </ul>
+                        <a href="#download" class="cursor-hover block text-center bg-brand-mint text-black border-2 border-black py-3 font-heading uppercase font-semibold text-sm hover:bg-black hover:text-brand-mint transition-colors">Get the app</a>
+                    </div>
+                </div>
+                <div class="store-badges flex flex-wrap justify-center items-center gap-3 mt-10">
+                    <a href="https://apps.apple.com/app/speakfolio/id6757969505" data-store="app_store" data-placement="pricing" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Download SpeakFolio on the App Store">
+                        <img src="assets/appstore-black.svg" alt="Download on the App Store" class="h-12 w-auto dark:hidden" height="48">
+                        <img src="assets/appstore-white.svg" alt="Download on the App Store" class="h-12 w-auto hidden dark:inline" height="48">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.speakfolio.app" data-store="google_play" data-placement="pricing" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Get SpeakFolio on Google Play">
+                        <img src="assets/google-play.png" alt="Get it on Google Play" class="h-12 w-auto rounded-[7px] border border-[#A6A6A6]" height="48">
+                    </a>
+                </div>
+                <p class="text-center font-mono text-[10px] uppercase text-gray-600 dark:text-gray-300 mt-6 max-w-2xl mx-auto leading-relaxed">US prices. The App Store or Google Play shows your local price. Pro is billed by your store and renews until you cancel in your store's subscription settings.</p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="py-20 md:py-24 px-6 border-b-2 border-[#1A1A1A] dark:border-[#333333]">
             <div class="max-w-3xl mx-auto">
-                <h2 class="font-heading text-3xl font-semibold uppercase tracking-tight mb-12">Questions You're Probably Asking</h2>
+                <h2 class="font-heading text-3xl font-semibold uppercase tracking-tight mb-12">Questions you're probably asking</h2>
                 <div class="space-y-4" id="faq-container">
-                    <!-- Q1 -->
-                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover">
-                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-heading font-semibold uppercase group-open:bg-[#FFB4A2]/10 transition-colors">
-                            I've tried brag docs before. They never stick. Why would this be different?
-                            <iconify-icon icon="solar:add-circle-linear" class="text-[#FFE600] group-open:rotate-45 transition-transform" width="24"></iconify-icon>
+                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+                        <summary class="cursor-hover flex justify-between items-center gap-4 p-5 md:p-6 font-heading text-lg uppercase list-none">
+                            I've tried brag docs before. They never stick.
+                            <iconify-icon icon="solar:add-circle-linear" class="shrink-0 group-open:rotate-45 transition-transform" width="24"></iconify-icon>
                         </summary>
-                        <div class="p-6 pt-0 font-inter text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-[#FFB4A2]/10">
-                            Brag docs fail because writing about yourself mid-flow feels awkward and performative. You're not going to stop what you're doing to type out accomplishments. SpeakFolio uses voice. 30 seconds of talking while the win is fresh, like you're telling a friend. No typing, no friction, no discipline required. That's why it actually sticks.
+                        <div class="px-5 md:px-6 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            Brag docs fail because writing about yourself mid-flow feels awkward. SpeakFolio uses voice: 30 seconds of talking while the win is fresh, like you're telling a friend. No typing, no template to fill in.
                         </div>
                     </details>
-                    <!-- Q2 -->
-                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover">
-                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-heading font-semibold uppercase group-open:bg-[#FFB4A2]/10 transition-colors">
-                            I genuinely don't have time to document my work.
-                            <iconify-icon icon="solar:add-circle-linear" class="text-[#FFE600] group-open:rotate-45 transition-transform" width="24"></iconify-icon>
+                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+                        <summary class="cursor-hover flex justify-between items-center gap-4 p-5 md:p-6 font-heading text-lg uppercase list-none">
+                            I don't have time to document my work.
+                            <iconify-icon icon="solar:add-circle-linear" class="shrink-0 group-open:rotate-45 transition-transform" width="24"></iconify-icon>
                         </summary>
-                        <div class="p-6 pt-0 font-inter text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-[#FFB4A2]/10">
-                            30 seconds per win. That's it. Most users capture 2-3 wins per week in under 5 minutes total. The ROI is hours saved during review season, and the raises you'll actually negotiate for because you can prove what you did.
+                        <div class="px-5 md:px-6 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            One short voice note when something goes well. Talk, don't type. The time you save comes back at review season, when the record is already written.
                         </div>
                     </details>
-                    <!-- Q3 -->
-                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover">
-                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-heading font-semibold uppercase group-open:bg-[#FFB4A2]/10 transition-colors">
-                            I don't want to sound like a bragger.
-                            <iconify-icon icon="solar:add-circle-linear" class="text-[#FFE600] group-open:rotate-45 transition-transform" width="24"></iconify-icon>
+                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+                        <summary class="cursor-hover flex justify-between items-center gap-4 p-5 md:p-6 font-heading text-lg uppercase list-none">
+                            I don't want to sound like I'm bragging.
+                            <iconify-icon icon="solar:add-circle-linear" class="shrink-0 group-open:rotate-45 transition-transform" width="24"></iconify-icon>
                         </summary>
-                        <div class="p-6 pt-0 font-inter text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-[#FFB4A2]/10">
-                            Neither do we. SpeakFolio structures your wins as professional documentation, not self-promotion. Factual: here's what happened, here's the outcome, here's who benefited. You're not bragging; you're keeping receipts. There's a difference.
+                        <div class="px-5 md:px-6 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            SpeakFolio writes your wins as professional documentation: what happened, what you did, what changed. You're not bragging; you're keeping receipts.
                         </div>
                     </details>
-                    <!-- Q4 -->
-                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover">
-                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-heading font-semibold uppercase group-open:bg-[#FFB4A2]/10 transition-colors">
-                            What happens after the free trial?
-                            <iconify-icon icon="solar:add-circle-linear" class="text-[#FFE600] group-open:rotate-45 transition-transform" width="24"></iconify-icon>
+                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+                        <summary class="cursor-hover flex justify-between items-center gap-4 p-5 md:p-6 font-heading text-lg uppercase list-none">
+                            What do Free and Pro include?
+                            <iconify-icon icon="solar:add-circle-linear" class="shrink-0 group-open:rotate-45 transition-transform" width="24"></iconify-icon>
                         </summary>
-                        <div class="p-6 pt-0 font-inter text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-[#FFB4A2]/10">
-                            You choose. Free plan (limited captures), Pro monthly ($9.99/month), or Pro annual ($79.99/year, save 33%). All Pro features are the same; annual just saves you $39.89. No surprise charges. No auto-billing. Cancel anytime. One successful raise negotiation pays for a decade.
+                        <div class="px-5 md:px-6 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            Free stays free: unlimited voice recordings and 5 AI-generated outputs a month. Pro is US$9.99 a month or US$79.99 a year and adds unlimited outputs, PDF and Word export, advanced insights and career growth coaching. Pro is billed by the App Store or Google Play in your local price and renews until you cancel in your store's subscription settings. See the <a href="terms.html" class="underline">Terms</a>.
                         </div>
                     </details>
-                    <!-- Q5 -->
-                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] rounded-lg cursor-hover">
-                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-heading font-semibold uppercase group-open:bg-[#FFB4A2]/10 transition-colors">
+                    <details class="group border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+                        <summary class="cursor-hover flex justify-between items-center gap-4 p-5 md:p-6 font-heading text-lg uppercase list-none">
                             Is my data private?
-                            <iconify-icon icon="solar:add-circle-linear" class="text-[#FFE600] group-open:rotate-45 transition-transform" width="24"></iconify-icon>
+                            <iconify-icon icon="solar:add-circle-linear" class="shrink-0 group-open:rotate-45 transition-transform" width="24"></iconify-icon>
                         </summary>
-                        <div class="p-6 pt-0 font-inter text-[#666666] dark:text-[#AAAAAA] leading-relaxed group-open:bg-[#FFB4A2]/10">
-                            100%. Your career documentation is yours. We don't sell your data. We don't train models on your wins. Export everything anytime. Delete everything with one click. Your proof, your control.
+                        <div class="px-5 md:px-6 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            Your entries are yours. We don't sell your data, and your content is not used to train AI models. Data travels over encrypted connections. You can export your entries, and you can delete your account in the app, or by email if you no longer have it (see <a href="delete-account.html" class="underline">Delete account</a>). Details are in the <a href="privacy.html" class="underline">Privacy Policy</a>.
+                        </div>
+                    </details>
+                    <details data-hub-link hidden class="group border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+                        <summary class="cursor-hover flex justify-between items-center gap-4 p-5 md:p-6 font-heading text-lg uppercase list-none">
+                            Is there a web version?
+                            <iconify-icon icon="solar:add-circle-linear" class="shrink-0 group-open:rotate-45 transition-transform" width="24"></iconify-icon>
+                        </summary>
+                        <div class="px-5 md:px-6 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            Yes. Your entries are also available in the browser: <a href="https://speakfoliohub.kentrologia.com/" class="underline">sign in on the web</a> with the same account you use in the app.
                         </div>
                     </details>
                 </div>
             </div>
         </section>
 
-        <!-- Final CTA + Footer (Accent: Yellow) -->
-        <footer class="bg-[#0A0A0A] text-white pt-24 px-6 border-t-2 border-[#1A1A1A]">
-            <div class="max-w-[1400px] mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 border-b border-white/20 pb-24">
+        <!-- Final CTA + Footer -->
+        <footer id="download" class="bg-[#0A0A0A] text-white">
+            <div class="max-w-[1400px] mx-auto px-6 py-20 md:py-24">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mb-20 border-b-2 border-[#333333] pb-16">
                     <div>
-                        <h2 class="font-heading text-5xl md:text-7xl uppercase tracking-tighter leading-none mb-8">
-                            Your next review<br>is closer than<br>you think.
-                        </h2>
-                        <p class="font-sans text-gray-400 max-w-md">
-                            Will you scramble again at 11 PM? Or will you walk in with 143 documented wins and watch everyone else panic?
-                        </p>
+                        <h2 class="font-heading text-4xl sm:text-5xl md:text-7xl uppercase tracking-tighter leading-none mb-8">Your next review<br>is closer than<br>you think.</h2>
+                        <p class="text-gray-400 text-lg max-w-xl">Will you scramble again at 11 PM, or walk in with every win already written?</p>
                     </div>
-                    <div class="flex flex-col justify-end items-start lg:items-end">
-                        <!-- Footer CTA - Waitlist Form or App Store Button -->
-                        <div id="footer-cta" class="w-full lg:w-auto">
-                            <!-- Waitlist form (shown when not launched) -->
-                            <form id="footer-waitlist-form" onsubmit="handleWaitlistSubmit(event, 'footer')" class="flex flex-col sm:flex-row gap-2 w-full">
-                                <input type="email" required placeholder="your@email.com" class="px-6 py-6 border-2 border-white bg-[#0A0A0A] text-white font-mono text-lg focus:outline-none focus:border-brand-yellow w-full sm:flex-1">
-                                <button type="submit" class="cursor-hover group relative overflow-hidden bg-brand-yellow text-black px-12 py-6 font-heading text-xl uppercase tracking-wide font-bold rounded-sm whitespace-nowrap">
-                                    <span class="relative z-10 flex items-center gap-2">Join Waitlist <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></span>
-                                    <div class="absolute inset-0 bg-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
-                                </button>
-                            </form>
-                            <!-- Success message -->
-                            <div id="footer-waitlist-success" class="hidden bg-brand-mint border-2 border-white px-8 py-6 font-heading font-semibold text-black uppercase text-center">
-                                You're on the list!
-                            </div>
-                            <!-- App Store button (shown when launched) -->
-                            <a id="footer-app-store" href="https://apps.apple.com/app/speakfolio/id6757969505" class="hidden cursor-hover inline-flex items-center justify-center">
-                                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" class="dark:hidden" style="height:56px;">
-                                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-us?size=250x83" alt="Download on the App Store" class="hidden dark:inline" style="height:56px;">
+                    <div class="flex flex-col gap-4">
+                        <div class="store-badges flex flex-wrap items-center gap-3">
+                            <a href="https://apps.apple.com/app/speakfolio/id6757969505" data-store="app_store" data-placement="footer" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Download SpeakFolio on the App Store">
+                                <img src="assets/appstore-white.svg" alt="Download on the App Store" class="h-12 w-auto" height="48">
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.speakfolio.app" data-store="google_play" data-placement="footer" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Get SpeakFolio on Google Play">
+                                <img src="assets/google-play.png" alt="Get it on Google Play" class="h-12 w-auto rounded-[7px] border border-[#A6A6A6]" height="48">
                             </a>
                         </div>
-                        <p class="font-mono text-xs text-gray-500 mt-4 uppercase">No setup marathon. Just 30 seconds.</p>
+                        <p class="font-mono text-[10px] uppercase text-gray-400">No setup marathon. Just 30 seconds.</p>
+                        <a href="https://speakfoliohub.kentrologia.com/" data-hub-link hidden class="hub-link cursor-hover font-mono text-xs uppercase underline underline-offset-4 decoration-2 hover:text-brand-yellow">Already on SpeakFolio? Sign in on the web &rarr;</a>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
                     <div>
-                        <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Connect</h5>
-                        <ul class="space-y-2 font-heading text-lg">
-                            <li><a href="https://twitter.com/getspeakfolio" class="hover:text-brand-yellow transition-colors cursor-hover">Twitter / X</a></li>
-                            <li><a href="https://instagram.com/speakfolio_official" class="hover:text-brand-yellow transition-colors cursor-hover">Instagram</a></li>
-                            <li><a href="https://tiktok.com/@getspeakfolio" class="hover:text-brand-yellow transition-colors cursor-hover">TikTok</a></li>
-                            <li><a href="https://linkedin.com/company/kentrologia" class="hover:text-brand-yellow transition-colors cursor-hover">LinkedIn</a></li>
+                        <h3 class="font-mono text-xs uppercase text-gray-400 mb-4">Connect</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="https://twitter.com/getspeakfolio" class="cursor-hover hover:text-brand-yellow">Twitter / X</a></li>
+                            <li><a href="https://instagram.com/speakfolio_official" class="cursor-hover hover:text-brand-yellow">Instagram</a></li>
+                            <li><a href="https://tiktok.com/@getspeakfolio" class="cursor-hover hover:text-brand-yellow">TikTok</a></li>
+                            <li><a href="https://linkedin.com/company/kentrologia" class="cursor-hover hover:text-brand-yellow">LinkedIn</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Product</h5>
-                        <ul class="space-y-2 font-heading text-lg">
-                            <li><a href="#pricing" class="hover:text-brand-yellow transition-colors cursor-hover">Pricing</a></li>
-                            <li><a href="mailto:hello@kentrologia.com" class="hover:text-brand-yellow transition-colors cursor-hover">Enterprise</a></li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Legal</h5>
-                        <ul class="space-y-2 font-heading text-lg">
-                            <li><a href="terms.html" class="hover:text-brand-yellow transition-colors cursor-hover">Terms</a></li>
-                            <li><a href="privacy.html" class="hover:text-brand-yellow transition-colors cursor-hover">Privacy</a></li>
-                            <li><a href="delete-account.html" class="hover:text-brand-yellow transition-colors cursor-hover">Delete account</a></li>
+                        <h3 class="font-mono text-xs uppercase text-gray-400 mb-4">Product</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="https://apps.apple.com/app/speakfolio/id6757969505" class="cursor-hover hover:text-brand-yellow">iPhone app</a></li>
+                            <li><a href="https://play.google.com/store/apps/details?id=com.speakfolio.app" class="cursor-hover hover:text-brand-yellow">Android app</a></li>
+                            <li><a href="#pricing" class="cursor-hover hover:text-brand-yellow">Pricing</a></li>
+                            <li data-hub-link hidden><a href="https://speakfoliohub.kentrologia.com/" class="cursor-hover hover:text-brand-yellow">Sign in on the web</a></li>
+                            <li><a href="mailto:hello@kentrologia.com" class="cursor-hover hover:text-brand-yellow">Teams and enterprise</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h5 class="font-mono text-xs text-gray-500 uppercase mb-4">Help</h5>
-                        <ul class="space-y-2 font-heading text-lg">
-                            <li><a href="support.html" class="hover:text-brand-yellow transition-colors cursor-hover">Support</a></li>
-                            <li><a href="mailto:hello@kentrologia.com" class="hover:text-brand-yellow transition-colors cursor-hover">Contact</a></li>
+                        <h3 class="font-mono text-xs uppercase text-gray-400 mb-4">Legal</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="terms.html" class="cursor-hover hover:text-brand-yellow">Terms</a></li>
+                            <li><a href="privacy.html" class="cursor-hover hover:text-brand-yellow">Privacy</a></li>
+                            <li><a href="delete-account.html" class="cursor-hover hover:text-brand-yellow">Delete account</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-mono text-xs uppercase text-gray-400 mb-4">Help</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="support.html" class="cursor-hover hover:text-brand-yellow">Support</a></li>
+                            <li><a href="mailto:hello@kentrologia.com" class="cursor-hover hover:text-brand-yellow">Contact</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="flex justify-between items-end pb-8 pt-4 font-mono text-[10px] text-gray-600 uppercase">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-mono text-xs uppercase text-gray-400">
                     <div class="flex items-center gap-2">
-                        <div class="w-2 h-2 rounded-full bg-brand-yellow"></div>
-                        <span>2026 SpeakFolio&#8482;</span>
+                        <div class="w-3 h-3 bg-brand-yellow"></div>
+                        <span>&copy; 2026 SpeakFolio&#8482;</span>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <a href="https://www.producthunt.com/products/speakfolio?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-speakfolio" target="_blank" rel="noopener noreferrer" class="dark:hidden">
-                            <img alt="SpeakFolio on Product Hunt" width="200" height="43" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1101327&theme=light">
-                        </a>
-                        <a href="https://www.producthunt.com/products/speakfolio?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-speakfolio" target="_blank" rel="noopener noreferrer" class="hidden dark:block">
-                            <img alt="SpeakFolio on Product Hunt" width="200" height="43" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1101327&theme=dark">
-                        </a>
-                        <span>Your voice, your wins, your story.</span>
-                    </div>
+                    <span>Your voice, your wins, your story.</span>
                 </div>
             </div>
         </footer>
-
     </main>
 
     <script>
-        // Custom Cursor Logic
+        // Custom cursor
         const cursor = document.getElementById('cursor');
-        const hoverElements = document.querySelectorAll('.cursor-hover, a, button, details');
-
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-
-        hoverElements.forEach(el => {
+        document.querySelectorAll('.cursor-hover, a, button, details').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
@@ -946,191 +616,37 @@
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('loaded');
                 initAnimations();
-                initLaunchState();
-            }, 1000);
+            }, 600);
         });
 
-        // Reveal Animations
         function initAnimations() {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.reveal-text').forEach(el => observer.observe(el));
         }
 
-        // Mobile Menu Toggle
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('open');
+            const open = menu.classList.toggle('open');
+            menu.inert = !open;
+            menu.setAttribute('aria-hidden', String(!open));
+            document.getElementById('menu-button').setAttribute('aria-expanded', String(open));
         }
 
-        // Initialize Launch State
-        function initLaunchState() {
-            const launched = SPEAKFOLIO_CONFIG.launched;
-            const appStoreUrl = SPEAKFOLIO_CONFIG.appStoreUrl;
-            
-            // Update waitlist counter
-            document.getElementById('waitlist-counter').textContent = SPEAKFOLIO_CONFIG.waitlistCount;
-            
-            // Update all launch-aware CTA text and href
-            document.querySelectorAll('.launch-cta').forEach(el => {
-                if (launched) {
-                    const launchedVal = el.dataset.launched;
-                    // If data-launched is a URL, just update href; otherwise update text + href
-                    if (launchedVal && launchedVal.startsWith('http')) {
-                        el.href = launchedVal;
-                    } else {
-                        if (launchedVal) {
-                            const icon = el.querySelector('iconify-icon');
-                            el.textContent = launchedVal;
-                            if (icon) el.appendChild(icon);
-                        }
-                        el.href = appStoreUrl;
-                    }
-                } else {
-                    const waitlistVal = el.dataset.waitlist;
-                    if (waitlistVal && !waitlistVal.startsWith('#') && !waitlistVal.startsWith('http')) {
-                        const icon = el.querySelector('iconify-icon');
-                        el.textContent = waitlistVal;
-                        if (icon) el.appendChild(icon);
-                    }
+        // Web Hub links stay hidden until SPEAKFOLIO_CONFIG.hubOpen is true.
+        if (SPEAKFOLIO_CONFIG.hubOpen) {
+            document.querySelectorAll('[data-hub-link]').forEach(el => el.removeAttribute('hidden'));
+        }
+
+        // Store badge clicks (PostHog)
+        document.querySelectorAll('.store-badge').forEach(el => {
+            el.addEventListener('click', () => {
+                if (window.posthog && posthog.capture) {
+                    posthog.capture('store_badge_click', { store: el.dataset.store, placement: el.dataset.placement });
                 }
             });
-            
-            if (launched) {
-                // Hide all waitlist forms, show app store buttons
-                ['hero', 'midpage', 'footer'].forEach(location => {
-                    const form = document.getElementById(`${location}-waitlist-form`);
-                    const appStore = document.getElementById(`${location}-app-store`);
-                    if (form) form.classList.add('hidden');
-                    if (appStore) {
-                        appStore.classList.remove('hidden');
-                        appStore.href = appStoreUrl;
-                    }
-                });
-                // Hide waitlist section entirely
-                const waitlistSection = document.getElementById('waitlist');
-                if (waitlistSection) waitlistSection.style.display = 'none';
-            } else {
-                // Show waitlist forms (default state)
-                ['hero', 'midpage', 'footer'].forEach(location => {
-                    const form = document.getElementById(`${location}-waitlist-form`);
-                    const appStore = document.getElementById(`${location}-app-store`);
-                    if (form) form.classList.remove('hidden');
-                    if (appStore) appStore.classList.add('hidden');
-                });
-            }
-        }
-
-        // Waitlist Form Submission
-        async function handleWaitlistSubmit(event, source) {
-            event.preventDefault();
-            const form = event.target;
-            const email = form.querySelector('input[type="email"]').value;
-            
-            // Submit to endpoint
-            const result = await submitWaitlist(email, source);
-            
-            if (result.success) {
-                // Show success message
-                form.classList.add('hidden');
-                document.getElementById(`${source}-waitlist-success`).classList.remove('hidden');
-                
-                // Increment counter if on main waitlist form
-                if (source === 'waitlist') {
-                    SPEAKFOLIO_CONFIG.waitlistCount++;
-                    document.getElementById('waitlist-counter').textContent = SPEAKFOLIO_CONFIG.waitlistCount;
-                }
-            } else {
-                alert('Something went wrong. Please try again.');
-            }
-        }
-
-        // Waitlist Submission Function (Supabase REST API + server-side notifications)
-        async function submitWaitlist(email, source) {
-            const { supabaseUrl, supabaseKey } = SPEAKFOLIO_CONFIG;
-            if (!supabaseUrl || !supabaseKey) {
-                return { success: true }; // Demo mode
-            }
-            try {
-                const res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': supabaseKey,
-                        'Authorization': `Bearer ${supabaseKey}`,
-                        'Prefer': 'return=minimal'
-                    },
-                    body: JSON.stringify({ email, source })
-                });
-                if (res.status === 409) {
-                    // Duplicate email, treat as success
-                    return { success: true, duplicate: true };
-                }
-                // Notifications (welcome email + Telegram alert) fire automatically
-                // via PostgreSQL trigger on insert. No client-side call needed.
-                return { success: res.ok };
-            } catch (e) {
-                return { success: false, error: e.message };
-            }
-        }
-
-        // Load live waitlist count from Supabase
-        async function loadWaitlistCount() {
-            const { supabaseUrl, supabaseKey } = SPEAKFOLIO_CONFIG;
-            if (!supabaseUrl || !supabaseKey) return;
-            try {
-                const res = await fetch(`${supabaseUrl}/rest/v1/rpc/get_waitlist_count`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': supabaseKey,
-                        'Authorization': `Bearer ${supabaseKey}`
-                    }
-                });
-                if (res.ok) {
-                    const count = await res.json();
-                    SPEAKFOLIO_CONFIG.waitlistCount = count;
-                    const el = document.getElementById('waitlist-counter');
-                    const wrapper = document.getElementById('waitlist-counter-wrapper');
-                    if (count >= 10 && el) {
-                        el.textContent = count;
-                        if (wrapper) wrapper.style.display = '';
-                    } else if (wrapper) {
-                        wrapper.style.display = 'none';
-                    }
-                }
-            } catch (e) { /* silent fail */ }
-        }
-
-        async function loadFoundingCount() {
-            const { supabaseUrl, supabaseKey } = SPEAKFOLIO_CONFIG;
-            if (!supabaseUrl || !supabaseKey) return;
-            try {
-                const res = await fetch(`${supabaseUrl}/rest/v1/rpc/get_founding_count`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': supabaseKey,
-                        'Authorization': `Bearer ${supabaseKey}`
-                    },
-                    body: '{}'
-                });
-                if (res.ok) {
-                    const count = await res.json();
-                    const el = document.getElementById('founding-counter');
-                    if (el) el.textContent = count;
-                }
-            } catch (e) { /* silent fail */ }
-        }
-
-        // Load count on page load
-        document.addEventListener('DOMContentLoaded', () => { loadWaitlistCount(); loadFoundingCount(); });
+        });
     </script>
 
 </body></html>

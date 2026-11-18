@@ -1,0 +1,14 @@
+name: check
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Site checks
+        run: scripts/check.sh
+      - name: HTML validity
+        run: npx --yes html-validate@9.4.0 --config .htmlvalidate.json index.html
