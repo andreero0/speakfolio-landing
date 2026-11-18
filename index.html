@@ -219,13 +219,13 @@
             <div class="flex items-center gap-4">
                 <!-- Theme Toggle -->
                 <div class="hidden md:flex border-2 border-[#1A1A1A] dark:border-[#333333] rounded-full p-1 gap-1">
-                    <button onclick="setTheme('light')" id="icon-sun" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
+                    <button onclick="setTheme('light')" id="icon-sun" aria-label="Light theme" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
                         <iconify-icon icon="solar:sun-linear" width="16"></iconify-icon>
                     </button>
-                    <button onclick="setTheme('system')" id="icon-system" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
+                    <button onclick="setTheme('system')" id="icon-system" aria-label="System theme" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
                         <iconify-icon icon="solar:monitor-linear" width="16"></iconify-icon>
                     </button>
-                    <button onclick="setTheme('dark')" id="icon-moon" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
+                    <button onclick="setTheme('dark')" id="icon-moon" aria-label="Dark theme" class="p-1 rounded-full cursor-hover text-[#1A1A1A] dark:text-white transition-colors">
                         <iconify-icon icon="solar:moon-linear" width="16"></iconify-icon>
                     </button>
                 </div>
@@ -236,14 +236,14 @@
                 </a>
 
                 <!-- Mobile Menu Icon -->
-                <button onclick="toggleMobileMenu()" class="md:hidden cursor-hover text-[#1A1A1A] dark:text-white" aria-label="Open menu">
+                <button onclick="toggleMobileMenu()" class="md:hidden cursor-hover text-[#1A1A1A] dark:text-white" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu" id="menu-button">
                     <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu md:hidden border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
+        <div id="mobile-menu" inert aria-hidden="true" class="mobile-menu md:hidden border-t-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
             <div class="flex flex-col p-6 space-y-4">
                 <a href="#how-it-works" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">How It Works</a>
                 <a href="#features" onclick="toggleMobileMenu()" class="cursor-hover font-mono text-xs uppercase hover:text-brand-yellow transition-colors">What You Get</a>
@@ -264,7 +264,7 @@
                         <div class="w-2 h-2 rounded-full bg-brand-mint"></div>
                         <span class="font-mono text-[10px] uppercase">On iPhone and Android</span>
                     </div>
-                    <span class="font-mono text-[10px] uppercase text-gray-500">For Professionals</span>
+                    <span class="font-mono text-[10px] uppercase text-gray-600 dark:text-gray-400">For Professionals</span>
                 </div>
 
                 <h1 class="space-y-2 mb-12">
@@ -287,7 +287,7 @@
                                 <img src="assets/google-play.png" alt="Get it on Google Play" class="h-12 w-auto rounded-[7px] border border-[#A6A6A6]" height="48">
                             </a>
                         </div>
-                        <p class="font-mono text-[10px] uppercase text-gray-500">Free to download. Free plan, no card needed.</p>
+                        <p class="font-mono text-[10px] uppercase text-gray-600 dark:text-gray-400">Free to download. Free plan, no card needed.</p>
                         <a href="https://speakfoliohub.kentrologia.com/" data-hub-link hidden class="hub-link cursor-hover font-mono text-xs uppercase underline underline-offset-4 decoration-2 hover:text-brand-sky ">Already on SpeakFolio? Sign in on the web &rarr;</a>
                     </div>
                 </div>
@@ -305,7 +305,7 @@
         <section class="py-20 md:py-24 bg-white dark:bg-[#0A0A0A] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
             <div class="max-w-6xl mx-auto px-6">
                 <div class="mb-12">
-                    <span class="font-mono text-xs uppercase text-brand-sky">See the difference</span>
+                    <span class="font-mono text-xs uppercase text-[#1F5FA8] dark:text-brand-sky">See the difference</span>
                     <h2 class="font-heading text-3xl md:text-5xl uppercase tracking-tight mt-2">30 seconds in. Review-ready out.</h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 border-2 border-[#1A1A1A] dark:border-[#333333]">
@@ -330,33 +330,33 @@
                         </ul>
                     </div>
                 </div>
-                <p class="font-mono text-[10px] uppercase text-gray-500 mt-4">Illustrative example. Your entries come from your own words.</p>
+                <p class="font-mono text-[10px] uppercase text-gray-600 dark:text-gray-400 mt-4">Illustrative example. Your entries come from your own words.</p>
             </div>
         </section>
 
         <!-- How it works -->
         <section id="how-it-works" class="bg-[#FAFAFA] dark:bg-[#0F0F0F] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
             <div class="max-w-6xl mx-auto px-6 py-20 md:py-24">
-                <span class="font-mono text-xs uppercase text-brand-sky">How it works</span>
+                <span class="font-mono text-xs uppercase text-[#1F5FA8] dark:text-brand-sky">How it works</span>
                 <h2 class="font-heading text-3xl md:text-5xl uppercase tracking-tighter leading-[1.05] mt-2 mb-12">Talk like you're telling a friend.<br class="hidden md:block"> SpeakFolio handles the rest.</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t-2 border-l-2 border-[#1A1A1A] dark:border-[#333333]">
                     <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-yellow/20 transition-colors">
-                        <span class="font-mono text-sm text-brand-sky">01</span>
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">01</span>
                         <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Capture the moment</h3>
                         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">You just shipped something. Talk into your phone for 30 seconds. No structure, no typing.</p>
                     </div>
                     <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-mint/20 transition-colors">
-                        <span class="font-mono text-sm text-brand-sky">02</span>
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">02</span>
                         <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Watch it take shape</h3>
                         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">SpeakFolio pulls out what you did and the result, and writes it up as a clean, dated entry.</p>
                     </div>
                     <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-sky/20 transition-colors">
-                        <span class="font-mono text-sm text-brand-sky">03</span>
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">03</span>
                         <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Build your record</h3>
                         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">Entries are organized by project and skill, and searchable. Week by week the record grows.</p>
                     </div>
                     <div class="p-6 md:p-8 border-r-2 border-b-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A] hover:bg-brand-lavender/20 transition-colors">
-                        <span class="font-mono text-sm text-brand-sky">04</span>
+                        <span class="font-mono text-sm text-[#1F5FA8] dark:text-brand-sky">04</span>
                         <h3 class="font-heading text-2xl uppercase mt-3 mb-4">Walk in prepared</h3>
                         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">Review season? Pick a time range and tap Generate. Copy it, or export it to share.</p>
                     </div>
@@ -367,7 +367,7 @@
         <!-- What you get -->
         <section id="features" class="bg-white dark:bg-[#0A0A0A] border-b-2 border-[#1A1A1A] dark:border-[#333333]">
             <div class="max-w-6xl mx-auto px-6 py-20 md:py-24">
-                <span class="font-mono text-xs uppercase text-brand-sky">What you can generate</span>
+                <span class="font-mono text-xs uppercase text-[#1F5FA8] dark:text-brand-sky">What you can generate</span>
                 <h2 class="font-heading text-3xl md:text-5xl uppercase tracking-tight mt-2 mb-12">Your notes, ready for the moment that counts.</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="border-2 border-[#1A1A1A] dark:border-[#333333] p-6 md:p-8 bg-white dark:bg-[#0A0A0A] hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_#1A1A1A] dark:hover:shadow-[4px_4px_0px_0px_#333333] transition-all">
@@ -445,7 +445,7 @@
                         <span class="absolute -top-3 right-6 bg-brand-mint text-black border-2 border-black font-mono text-[10px] uppercase px-2 py-1">Save 33%</span>
                         <h3 class="font-heading text-2xl uppercase mb-2">Pro annual</h3>
                         <div class="mb-2"><span class="font-heading text-5xl font-bold">$79.99</span><span class="font-mono text-sm">/year</span></div>
-                        <p class="font-mono text-xs text-[#008F6B] dark:text-brand-mint mb-6">About $6.67 a month, $39.89 less than 12 months of monthly</p>
+                        <p class="font-mono text-xs text-[#006B50] dark:text-brand-mint mb-6">About $6.67 a month, $39.89 less than 12 months of monthly</p>
                         <ul class="space-y-3 mb-8 text-sm flex-1">
                             <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> Everything in Pro monthly</li>
                             <li class="flex gap-2"><iconify-icon icon="solar:check-circle-linear" class="text-brand-mint text-lg shrink-0"></iconify-icon> One payment a year</li>
@@ -453,7 +453,16 @@
                         <a href="#download" class="cursor-hover block text-center bg-brand-mint text-black border-2 border-black py-3 font-heading uppercase font-semibold text-sm hover:bg-black hover:text-brand-mint transition-colors">Get the app</a>
                     </div>
                 </div>
-                <p class="text-center font-mono text-[10px] uppercase text-gray-500 mt-8 max-w-2xl mx-auto leading-relaxed">US prices. The App Store or Google Play shows your local price. Pro is billed by your store and renews until you cancel in your store's subscription settings.</p>
+                <div class="store-badges flex flex-wrap justify-center items-center gap-3 mt-10">
+                    <a href="https://apps.apple.com/app/speakfolio/id6757969505" data-store="app_store" data-placement="pricing" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Download SpeakFolio on the App Store">
+                        <img src="assets/appstore-black.svg" alt="Download on the App Store" class="h-12 w-auto dark:hidden" height="48">
+                        <img src="assets/appstore-white.svg" alt="Download on the App Store" class="h-12 w-auto hidden dark:inline" height="48">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.speakfolio.app" data-store="google_play" data-placement="pricing" class="store-badge cursor-hover hover-lift inline-flex" aria-label="Get SpeakFolio on Google Play">
+                        <img src="assets/google-play.png" alt="Get it on Google Play" class="h-12 w-auto rounded-[7px] border border-[#A6A6A6]" height="48">
+                    </a>
+                </div>
+                <p class="text-center font-mono text-[10px] uppercase text-gray-600 dark:text-gray-300 mt-6 max-w-2xl mx-auto leading-relaxed">US prices. The App Store or Google Play shows your local price. Pro is billed by your store and renews until you cancel in your store's subscription settings.</p>
             </div>
         </section>
 
@@ -504,7 +513,7 @@
                             <iconify-icon icon="solar:add-circle-linear" class="shrink-0 group-open:rotate-45 transition-transform" width="24"></iconify-icon>
                         </summary>
                         <div class="px-5 md:px-6 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
-                            Your entries are yours. We don't sell your data, and your content is not used to train AI models. Data travels over encrypted connections. You can export your entries, and you can delete your account from the app or the web. Details are in the <a href="privacy.html" class="underline">Privacy Policy</a>.
+                            Your entries are yours. We don't sell your data, and your content is not used to train AI models. Data travels over encrypted connections. You can export your entries, and you can delete your account in the app, or by email if you no longer have it (see <a href="delete-account.html" class="underline">Delete account</a>). Details are in the <a href="privacy.html" class="underline">Privacy Policy</a>.
                         </div>
                     </details>
                     <details data-hub-link hidden class="group border-2 border-[#1A1A1A] dark:border-[#333333] bg-white dark:bg-[#0A0A0A]">
@@ -618,7 +627,11 @@
         }
 
         function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('open');
+            const menu = document.getElementById('mobile-menu');
+            const open = menu.classList.toggle('open');
+            menu.inert = !open;
+            menu.setAttribute('aria-hidden', String(!open));
+            document.getElementById('menu-button').setAttribute('aria-expanded', String(open));
         }
 
         // Web Hub links stay hidden until SPEAKFOLIO_CONFIG.hubOpen is true.
