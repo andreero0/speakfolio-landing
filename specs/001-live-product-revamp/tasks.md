@@ -1,0 +1,11 @@
+# Tasks 001
+- [x] T1 Before screenshots (sf-site-1118/before)
+- [x] T2 Council verdict applied
+- [x] T3 Remove waitlist/founding markup, JS, Supabase config (FR-1, FR-2)
+- [x] T4 Store badge CTAs + PostHog click event (FR-3, FR-7)
+- [x] T5 Hub link behind hubOpen flag (FR-4)
+- [x] T6 Pricing + FAQ accuracy (FR-5, FR-6)
+- [x] T7 Tokens extracted to design/ (FR-8)
+- [x] T8 scripts/check.sh + CI workflow (FR-9)
+- [ ] T9 Codex review MERGE, PR, CI green
+- [ ] T10 Preview screenshots, ORCH-REQUEST, merge on typed go, live check

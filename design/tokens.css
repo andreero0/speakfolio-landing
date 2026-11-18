@@ -1,0 +1,42 @@
+/* SpeakFolio shared brand tokens, taken from speakfolio.kentrologia.com (index.html Tailwind config
+   and styles) on 2026-11-18. One look across the site, the web Hub and the app.
+   Variable names match the Hub (web/hub/src/styles.css) where a Hub token already exists, so the Hub
+   can adopt these by import without renaming. New tokens are prefixed --sf-. */
+:root {
+  /* Colour */
+  --yellow: #ffe600;      /* brand yellow: primary action, current state */
+  --mint: #00d9a5;        /* success, "spoken source", annual plan */
+  --sky: #4da6ff;         /* secondary accent (links, how-it-works) */
+  --lav: #b197fc;         /* "your wording" */
+  --coral: #ff6b6b;
+  --rose: #ffb4a2;
+  --ink: #1a1a1a;         /* text and borders, light theme */
+  --line: #1a1a1a;
+  --bg: #ffffff;
+  --panel: #fafafa;
+  --on: #1a1a1a;          /* text on yellow/mint/sky */
+
+  /* Type */
+  --sf-font-heading: 'Space Grotesk', system-ui, sans-serif;  /* headings: uppercase, weight 500-700 */
+  --sf-font-body: 'Inter', system-ui, sans-serif;
+  --sf-font-mono: 'JetBrains Mono', ui-monospace, monospace;   /* labels/kickers: uppercase, 0.1em tracking */
+  --sf-heading-tracking: -0.02em;
+  --sf-mono-tracking: 0.1em;
+  --sf-heading-case: uppercase;
+
+  /* Shape */
+  --sf-border: 2px solid var(--line);
+  --sf-radius: 0;          /* site corners are square; buttons may use 4px */
+  --shadow-color: #1a1a1a;
+  --shadow-sm: 2px 2px 0 var(--shadow-color);
+  --shadow: 4px 4px 0 var(--shadow-color);
+  --shadow-lg: 6px 6px 0 var(--shadow-color);
+  --sf-lift: translateY(-2px);   /* hover: lift + hard shadow */
+}
+:root[data-theme='dark'], html.dark {
+  --ink: #ffffff;
+  --line: #333333;
+  --bg: #0a0a0a;
+  --panel: #1a1a1a;
+  --shadow-color: #000000;
+}
